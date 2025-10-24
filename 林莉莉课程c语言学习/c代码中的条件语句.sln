@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "c代码中的条件语句", "c代码中的条件语句.exe", "{0E4EA5B6-50C3-4498-950E-F0D8D0979A04}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Users\pc\Desktop\my_python_nots\c语言学习\林莉莉课程c语言学习\c代码中的条件语句.exe
+		RemoteMachine = DESKTOP-GIF974L
+		StartingDirectory = C:\Users\pc\Desktop\my_python_nots\c语言学习\林莉莉课程c语言学习
+		Environment = 默认值
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E4EA5B6-50C3-4498-950E-F0D8D0979A04}.Debug|x64.ActiveCfg = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
