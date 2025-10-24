@@ -1,0 +1,1 @@
+void jjjj(int,int)//这是一个函数的声明。
