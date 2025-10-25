@@ -10,7 +10,7 @@ int xingbie=0;
 char huo_don='l';
 float huo=0.0;
 
-float BMI(float ti_zhong,float shen_gao){//计算体脂率的函数 
+float BMI(float ti_zhong,float shen_gao){//计算bmi的函数 
 	return ti_zhong/(shen_gao*shen_gao);
 }
 
@@ -221,22 +221,44 @@ void pa_bfp(float bfp,int xin){
 
 void pa_bmi(float bmi){
 	if(bmi<18.5){
-		printf("您属于偏瘦范围。\n"); 
+		printf("\t您属于偏瘦范围。\n"); 
 	}
 	else if(bmi>18.5 && bmi<23.9){
-		printf("您属于正常范围。\n");
+		printf("\t您属于正常范围。\n");
 	}
 	else if(bmi>24 && bmi<27.9){
-		printf("您属于偏胖的范围。\n");
+		printf("\t您属于偏胖的范围。\n");
 	}
 	else if(bmi>=28){
-		printf("您属于肥胖范围。\n"); 
+		printf("\t您属于肥胖范围。\n"); 
 	}
 }
 
-void pa_whr(){
+void pa_whr(float whr,int xin){
+	if(whr<0.9 && xin==1){
+		printf("\t您的腰围没有超标，是好的身材，请多加锻练，继续保持！");
+	}
+	else if(whr<0.85 && xin==0){
+		printf("\t您的腰围没有超标，是好的身材，请多加锻练，继续保持！");
+	}
+	else{
+		printf("\t您的腰围可能超标，是苹果形身材，请多加锻练，因为这个范围内的心血管疾病的概律显著增加！"); 
+	}
 	
 }
+
+void pa_yao23(int yao23){
+	if(yao23==20){
+		printf("\t尊贵的男士,您的腰围符和合标准，请继续保持！\n");
+	}
+	else if(yao23==10){
+		printf("\t美丽的女士，您的腰围符合标尊，起继续保持！\n"); 
+	}
+	else{
+		printf("\t您的腰围太大了，如果输入的数据确定没有问题的话，那么您可能有中心性肥胖的风险！\n");
+	} 
+}
+
 int main(){
 	
 	ti_shi();
@@ -248,12 +270,15 @@ int main(){
     float ffmi=FFMI(ti,shen,bfp/100);
     float bmr=BMR(shen,age,ti,xingbie);
     float tde=TDEE(bmr,huo);
+    int yao2=yao23(yao,xingbie);
     printf("\n\tok!您的健康测试报告为：\n");
     printf("\t您的体脂率为：%.2f%%\n",bfp);
 	pa_bfp(bfp,xingbie);
     printf("\t您的身体BMI指数为：%.2f\n",bmi);
     pa_bmi(bmi);
     printf("\t您的腰臀比为：%.2f\n",whr);
+    pa_whr(whr,xingbie);
+    pa_yao23(yao2);
     printf("\t您的去脂体重指数为：%.2f\n",ffmi);
     printf("\t您的基础代谢率是：%.2f%%\n",bmr);
     printf("\t您的每日总能量消耗为：%.2f\n",tde);
