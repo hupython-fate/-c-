@@ -75,6 +75,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="lian_ai支线的剧情.c" />
+    <ClCompile Include="mao_xian_kkk支线.c" />
     <ClCompile Include="mao_xian支线剧情.c" />
     <ClCompile Include="xing_sho_cun.c" />
     <ClCompile Include="一个if的嵌套.c" />

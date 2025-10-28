@@ -1,5 +1,5 @@
 #include <stdio.h>
-extern xing_sho_cun();
+extern void xing_sho_cun();
 char j='n';
 void mao_xianA(){
 	printf("==========冒险开始！==========\n");
@@ -16,7 +16,7 @@ void mao_xianA(){
 	printf("----------谁说盗贼不能成为勇者？我不就是？==被全魔大陆共“誉”为内裤杀手的盗之勇者不要脸的说道。\n");
 	printf("===============\n");
 	printf("请根据以上信息作出判断，并输入你的选择：");
-	scanf("%c",&j);
+	scanf(" %c",&j);
 	if(j=='A' || j=='a'){
 	    printf("你选择了自己的职业，也就决定了你的朋友和敌人！\n");
 		printf("战士是一个明智的选择。\n");

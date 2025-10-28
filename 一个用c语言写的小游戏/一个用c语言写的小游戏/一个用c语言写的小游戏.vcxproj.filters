@@ -30,6 +30,9 @@
     <ClCompile Include="xing_sho_cun.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="mao_xian_kkk支线.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="一个函数的声明.h">
