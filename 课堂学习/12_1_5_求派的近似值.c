@@ -8,7 +8,7 @@ int main(void)
 		k=pow(-1,n)*(1/(2*n+1));
 		h=k+h;
 		n++;
-		printf("%lf\n",k);
+		//printf("%lf\n",k);
 	}while(fabs(k)>1e-6);
 	printf("%lf",h*4);
 	return 0;
