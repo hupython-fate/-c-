@@ -8,8 +8,8 @@ void buyChicken(int rooster, int hen, int chick, int money, int count) {
         if (money == 0) {
             printf("公鸡: %d只, 母鸡: %d只, 小鸡: %d只\n", 
                    rooster, hen, chick);
+            //return;
         }
-        return;
     }
     
     // 递归条件：继续买鸡
