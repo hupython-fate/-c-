@@ -29,3 +29,8 @@ char pan_duan(char qipan[han][lie],int a,int b);
 
 //判断棋盘格子有没有满的函数。
 char pan_man(char qipan[han][lie],int a,int b);
+
+
+//在头文件中声明函数的原型，不过为什么要在自定义的头文件中呢？
+//仔细想一想也能明白，起的是媒介的作用，把game.c和test.c中的函数定义和调用联系起来。
+//游戏的主函数在test.c中，而game.c和test.c都包含了自定义的头文件。
