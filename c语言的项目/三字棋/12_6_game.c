@@ -1,7 +1,7 @@
 #include "12_6_game.h"
 //游戏代码的主逻辑
 //
-
+//1,初始化棋盘的函数
 void initqipan(char qipan[han][lie],int a,int b)
 {
 	int i=0,j=0;
@@ -12,9 +12,9 @@ void initqipan(char qipan[han][lie],int a,int b)
 			qipan[i][j]=' ';//初始化棋盘。
 		}
 	}
-
 }
 
+//2,打印棋盘的函数
 void printqipan(char qiban[han][lie],int a,int b)
 {
 
@@ -47,6 +47,7 @@ void printqipan(char qiban[han][lie],int a,int b)
 	}
 }
 
+//3,玩家下棋的函数
 void wanplay(char qipan[han][lie],int a,int b)
 {
 	int aa,bb;
@@ -58,7 +59,7 @@ void wanplay(char qipan[han][lie],int a,int b)
 		//输入坐标合法性的判断。
 		if(aa>=1 && aa<=a && bb>=1 && bb<=b)
 		{
-			if(qipan[aa-1][bb-1]== ' ')
+			if(qipan[aa-1][bb-1]==' ')
 			{
 				qipan[aa-1][bb-1]='*';
 				break;
@@ -68,7 +69,7 @@ void wanplay(char qipan[han][lie],int a,int b)
 				printf("此位置已经被下过了，不能重下。");
 				continue;
 			}
-			break;
+		//	break;
 		}
 		else 
 		{
@@ -78,11 +79,11 @@ void wanplay(char qipan[han][lie],int a,int b)
 	}
 }
 
-//电脑下棋
+//4,电脑下棋
 //随机生成一个坐标，如果这个坐标合法且没有被下过，那么电脑就下那里。
 void pcplay(char qipan[han][lie],int a,int b)
 {
-	printf("电脑下棋:>\n");
+	printf("电脑下棋:>>\n");
 	while(1)
 	{
 		int aa=rand()%a;//rand()是生成随机数的函数。
@@ -96,7 +97,7 @@ void pcplay(char qipan[han][lie],int a,int b)
 }
 
 
-//判断输赢的函数
+//5,判断输赢的函数
 char pan_duan(char qipan[han][lie],int a,int b)
 {
 	int i=0,j=0;
@@ -125,18 +126,18 @@ char pan_duan(char qipan[han][lie],int a,int b)
 	}
 
 	//如果程序能走到这里，也就是说，没有人赢，要么是棋盘满了平局，要么是棋盘没有满继续。
-	switch(pan_man(qipan,han,lie))
+	switch(pan_man(qipan,han,lie))//这里的返回值是字符型
 	{
-		case 2:
+		case '2'://这里的常量也应该是字符型
 			return 'q';//平局
 			break;
-		case 3:
-			return 'c';
+		case '3':
+			return 'c';//游戏继续。
 			break;
 	}
 }
 
-//判断棋盘有没有满的函数
+//6,判断棋盘有没有满的函数
 char pan_man(char qipan[han][lie],int a,int b)
 {
 	int i,j,h=0;
@@ -152,7 +153,7 @@ char pan_man(char qipan[han][lie],int a,int b)
 			}
 		}
 	}
-	if(h==9)
+	if(h==9)//说明格子满了
 	{
 		return '2';
 	}
