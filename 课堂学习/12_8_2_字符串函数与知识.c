@@ -9,9 +9,11 @@ int main(void)
 	//a=gets();
 	//puts(b);
 	fgets(a,sizeof(a),stdin);
-	a[strcspn(a,"\n")]='\0';
+	a[strcspn(a,"\n")]='\0';//去除读取的字符串中的换行符
 	strcpy(b,"你好");
 	strcat(a,b);
 	puts(a);
+
+
 	return 0;
 }
