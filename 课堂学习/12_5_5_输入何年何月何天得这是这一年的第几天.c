@@ -11,7 +11,7 @@ int main(void)
 	if(nian%400==0 || (nian%4==0 && nian%100!=0))
 	{
 		//printf("%d年是闰年。",nian);
-		yue_tian[1]+1;
+		yue_tian[1]+=1;
 	}
 	//else 	printf("%d是平年。",nian);
 	//这个月的之前所有月的天数之和，加用户输入的天数。
