@@ -2,33 +2,13 @@
 
 int pipei(int *x)
 {
-	//printf("asdfasdaf\n");
-	//匹配的数值应从0开始
-	//也就是说，写一个循环，令一个变量的值从0开始递增，然后这个变量的每一位如果和参数数组相同的话，那么就跳出循环，并返回这个变量的值。
-	int i=0,j=0,arr[4],z=0,h=0,ii=0,jj=0;
-	for(i=0;i<9999;i++)
-	{
-		for(j=0;j<4;j++)
-		{
-			ii=i;//用中间变量避免死循环。
-			jj=j;
-			arr[jj]=ii%10;
-			ii/=10;
-			if(arr[0]==x[3] && arr[1]==x[2] && arr[2]==x[1] && arr[3]==x[0])
-			{
-				break;
-				h=1;
-			}
-		}
-		if(h) break;
-	}
-	return i;
-}
-
+    // 假设数组有4个元素，组合成4位数
+    // 例如：x[0]=1, x[1]=2, x[2]=3, x[3]=4 -> 返回1234
+    return x[0] * 1000 + x[1] * 100 + x[2] * 10 + x[3];
+}//直是绝妙的方法。
 
 int pai_max(int x)
 {
-	//printf("max\n");
 	int arr[4],i,j,z;//四位数嘛，定义一个容量为4的数组；
 	for(i=0;i<4;i++)
 	{
@@ -39,7 +19,7 @@ int pai_max(int x)
 	
 	//老生常谈的冒泡排序
 	for(i=0;i<3;i++)
-		for(j=0;j<3;j++)
+		for(j=0;j<3-i;j++)
 		{
 			//printf("kkk\n");
 			if(arr[j]<arr[j+1])//把小的放后面，把大的放前面。
@@ -66,7 +46,7 @@ int pai_min(int x)
 	
 	//老生常谈的冒泡排序
 	for(i=0;i<3;i++)
-		for(j=0;j<3;j++)
+		for(j=0;j<3-i;j++)
 			if(arr[j]>arr[j+1])//把大的放后面，把小的放前面。
 			{
 				z=arr[j];
@@ -89,7 +69,6 @@ int kblk(int x)
 
 	while(cha!=6174)
 	{
-		printf("%d \n",max1);//打印出来居然是0,说明匹配函数有问题。
 		h++;
 		max1=pai_max(x);
 		min1=pai_min(x);
@@ -103,15 +82,20 @@ int kblk(int x)
 int main(void)
 {
 	int x=1000;
-	//printf("sssss\n");
+	printf("不是卡布列克常数的有\n");
 	while(x<=9999)
 	{
 		//printf("kk\n");
-		if(kblk(x)==6174)
+		if(kblk(x)!=6174)
 		{
-			printf("%d\n",x);
+			printf("%d ",x);
 		}
 		x++;
 	}
+	printf("\n其他的全部都是卡布列克常数！");
 	return 0;
 }
+
+
+//1实际上，几乎所有四位不同数字的数（除了1111、2222等）都能通过卡布列克过程得到6174，所以这个程序会输出大量的数字。
+
