@@ -21,3 +21,5 @@ extern int a;//a的值为用户输入的科目数。
 extern int b;//b的值为用户输入的学生人数。
       //
 extern struct stu student_data[hunman];
+
+void zhongfen();//计算总分的函数的声名。
