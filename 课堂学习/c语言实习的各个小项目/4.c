@@ -28,6 +28,6 @@ int main(void)
 			lll+=b[j];
 	}
 	printf("\n");
-	printf("成绩及格的分数总和为%.3f",lll);
+	printf("成绩及格的分数总和为%.3f,平均成绩为%.3f",lll,lll/(i+1));
 	return 0;
 }

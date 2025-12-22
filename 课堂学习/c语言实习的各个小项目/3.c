@@ -2,12 +2,11 @@
 int main(void)
 {
 	int kkk=0;
-	int i;
+	int i=0;
 	int k=0,l=0;
 	printf("请输入一个正整数：");
 	scanf("%u",&kkk);
-	for(i=0;i<=kkk;i++)
-	{
+	do{
 		if(i%2==0)//偶数和
 		{
 			k+=i;
@@ -16,7 +15,9 @@ int main(void)
 		{
 			l+=i;
 		}
-	}
+		i++;
+	}while(i<=kkk);
+
 	printf("偶数和%d，奇数和%d。",k,l);
 	//1 2 3 4 5 6  7 8 9 10
 	//如果输入10
