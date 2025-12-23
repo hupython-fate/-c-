@@ -11,7 +11,7 @@ int main(void)
 	}
 	for(i=2;i<6;i++)//处理
 	{
-		for(j=1;j<6;j++)
+		for(j=1;j<=i-1;j++)
 		{
 			arr[i][j]=arr[i-1][j-1]+arr[i-1][j];
 		}
