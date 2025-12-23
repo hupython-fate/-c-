@@ -1,22 +1,26 @@
 #include <stdio.h>
 
-int jie(int k)
+float jie(float k)
 {
 	int xxx=1;
-	if(k==0)
+	int i=0;
+	if(k==0.0)
 		xxx=1;
 	else
-		xxx*=k;
+	{
+		for(i=1;i<=k;i++)
+		xxx*=i;
+	}
 	return xxx;
 }
 
 int main(void)
 {
-	int a,i;
+	float a,i;
 	float kkk=0.0;
 	printf("请输入一个数：");
-	scanf("%d",&a);
-	for(i=0;i<=a;i++)
+	scanf("%f",&a);
+	for(i=0.0;i<=a;i++)
 	{
 		kkk+=(1.0/jie(i));	
 	}

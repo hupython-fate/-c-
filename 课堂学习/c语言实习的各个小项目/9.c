@@ -26,7 +26,7 @@ int main(void)
 
 	for(i=0;i<a-1;i++)//冒泡排序
 	{
-		for(p=arr,p1=p;p<p1+a-1;p++)
+		for(p=arr,p1=p;p<p1+a-1-i;p++)
 		{
 			if(*p<*(p+1))
 			{
