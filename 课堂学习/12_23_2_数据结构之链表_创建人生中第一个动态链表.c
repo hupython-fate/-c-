@@ -55,9 +55,8 @@ struct node *creatlist(int k)//这个函数的返回类型应该是什么？不�
 
 void printlist(struct node *as)
 {
-	int i=0;
 	as=as->next;
-	while(as->next!=NULL)
+	while(as!=NULL)
 	{
 		printf("%d  ",as->data);
 		as=as->next;
