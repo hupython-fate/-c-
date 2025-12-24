@@ -15,9 +15,11 @@ void input(int *p)
 	{
 		printf("欢迎来到计算器！请输入您的算式并按下回车！\n");
 		printf("示例：1+2+3=\n");
+		printf("记住，最后一定要加=号\n");
+		printf("本计算器只能用于复数的加减法！\n");
 		(*p)++;
 	}
-	printf(">>>");
+	printf("\n>>>");
 	do{
 		i++;
 		//printf("aaa");
@@ -41,37 +43,37 @@ void print()//打印出来看看输入的效果
 //接下来就是获得运算的结果的函数了，为了计算的合理性，返回值的类型应该为float。
 float jisuan(struct fa data[])
 {
-	//printf("ssss");
 	float k=0,x=0;
 	int i=0;
+	//如果要加上乘和除的话，那么就涉及运算的优先级的问题，所以这个程序目前先只完成复数的加和减运算。
+	//1+2-4-5=
+	//首先判断+，然后计算1+2的和，然后这个和放在一个变量中，在判断，在x-4~~
+	//这是我的第一个思路。
+	//
+	//这个思路可能不行，想一想，如果不跨2遍历，而是逐个遍历呢？
+	//把减法视为加法就可以了，-1,本质上是1的相反数，所以，只需要跟据上一个元素的符号领域的内容，把对应的数变成相反数，然后再统一进行加法就可以了。
 	while(data[i].zi!='=')
 	{
-		if(data[i].zi=='+')
-		{
-			//k=data[i].shu+data[i+1].shu;	
-			k=data[i].shu;
-			x+=k;
-		}
-		else if(data[i].zi=='-')
-		{
-			//k=data[i].shu-data[i+1].shu;
-			k=data[i].shu;
-			x-=k;
-		}
+		//printf("llll\n");
+		if(data[i].zi=='-')//只需要判断负号，把对应的数转化成相反数
+			data[i+1].shu=-data[i+1].shu;
+		k=data[i].shu;
+		x+=k;
 		i++;
-		//x+=k;
 	}
-	//如果要加上乘和除的话，那么就涉及运算的优先级的问题，所以这个程序目前先只完成复数的加和减运算。
-	return x;
+	return x+data[i].shu;
 }
 
 int main(void)
 {
+	while(1)
+	{
 	input(p);
 	print();
 	//printf("zzz");
 	float y=jisuan(data);
 	printf("计算结果为%.3f",y);
+	}
 	return 0;
 }
 
