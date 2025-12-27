@@ -33,7 +33,7 @@ struct health *health(struct Aman *head)//把用户的数据进行处理的第�
 		else 
 		{
 			q1->BMR=10*head->ti+6.25*head->shen*100-5*head->age-161;
-			q1-BFP=(495/(1.29579-0.35004*log10(head->yao+head->tun-head->jin)+0.22100*log10(head->shen*100)))-450;
+			q1->BFP=(495/(1.29579-0.35004*log10(head->yao+head->tun-head->jin)+0.22100*log10(head->shen*100)))-450;
 		}
 		q1->BFP=(head->ti*(1-q1->BFP))/pow(head->shen,2);
 		q1->yao_tun_bi=head->yao/head->tun;
@@ -50,6 +50,8 @@ struct health *health(struct Aman *head)//把用户的数据进行处理的第�
 void printfile(struct Aman *head)
 {
 	char file_name[100];
+	//while((getchar())!='\n' ||  (getchar())!=EOF );
+	getchar();
 	printf("请输入原始数据文件名:");
 	fgets(file_name,100,stdin);
 	
@@ -64,16 +66,16 @@ void printfile(struct Aman *head)
 	if((p=fopen(file_name,"w"))==NULL)
 	{
 		printf("error!!");
-		return 0;
+		return;
 	}
 	//头指针的数据域为空，所以
 	head=head->next;
 
-	fprintf(p,"姓名   年龄    性别    身高    体重    颈围     胸围      腰围     臀围      活动系数\n");
+	fprintf(p,"姓名\t\t年龄\t\t性别\t\t身高\t\t体重\t\t颈围\t\t胸围\t\t腰围\t\t臀围\t\t活动系数\n");
 	//使用while循环加字符串写fprintf
 	while(head!=NULL)
 	{
-		fprintf(p,"%s    %d   %d    %.2f   %.2f    %.2f   %.2f    %.2f      %.2f      %.2f ",head->name,head->age,head->xingbie,head->shem,head->ti,head->jin,head->xiong,head->yao,head->tun,head->huo);
+		fprintf(p,"%5s\t%5d\t%5d\t%5.2f\t%5.2f\t%5.2f\t%5.2f\t%5.2f\t%5.2f\t%5.2f \n",head->name,head->age,head->xingbie,head->shen,head->ti,head->jin,head->xiong,head->yao,head->tun,head->huo);
 		head=head->next;
 	}
 	//如果没有意外的话，这个函数就这样写好了。
@@ -97,17 +99,18 @@ void print_health(struct health *head,struct Aman *kkk)
 	if((p=fopen(file_name,"w"))==NULL)
 	{
 		printf("error!!");
-		return 0;
+		return;
 	}
 	//头指针的数据域为空，所以
 	head=head->next;
-
-	fprintf(p,"姓名   年龄    性别    BMI	BMR	BFP	FFMI	臀腰比\n");
+	kkk=kkk->next;
+	fprintf(p,"姓名\t\t年龄\t\t性别\t\tBMI\t\tBMR\t\tBFP\t\tFFMI\t\t臀腰比\n");
 	//使用while循环加字符串写fprintf
 	while(head!=NULL)
 	{
-		fprintf(p,"%s    %d   %d    %.2f   %.2f    %.2f   %.2f    %.2f      %.2f      %.2f ",head->name,head->age,head->xingbie,head->shem,head->ti,head->jin,head->xiong,head->yao,head->tun,head->huo);
+		fprintf(p,"%5s\t%5d\t%5d\t%5.2f\t%5.2f\t%5.2f\t%5.2f\t%5.2f\n",kkk->name,kkk->age,kkk->xingbie,head->BMI,head->BMR,head->BFP,head->FFMI);
 		head=head->next;
+		kkk=kkk->next;
 	}
 	//如果没有意外的话，这个函数就这样写好了。
 }
@@ -116,18 +119,22 @@ void print_health(struct health *head,struct Aman *kkk)
 void ti_shi(struct Aman *q,int i)
 {	
 	char ch,huo_don;
-	printf("======== Welcome to the health test program!  ======\n");
-	printf("========Please get a soft measuring tape.  =========\n");
+	//printf("======== Welcome to the health test program!  ======\n");
+	//printf("========Please get a soft measuring tape.  =========\n");
+	printf("============欢迎来到健康测试程序！==================\n");
+	printf("==============请准备一根软卷尺！====================\n");
 	printf("\a");
-	printf("请输入第%d个人的名字：");
+	printf("请输入第%d个人的名字：",i+1);
 	scanf("%s",&q->name);
 	while(1)
 	{
-		printf("\nPlease enter %d your height in m：",i+1);
+		//printf("\nPlease enter %d your height in m：",i+1);
+		printf("\n请输入第%d个人的身高，单位为米：",i+1);
 	    	if((scanf("%f",&q->shen))!=1 || q->shen>2.0 || q->shen<1)
 	    	{
 			while((ch = getchar()) != '\n' && ch != EOF);//避免输入非数字进入死循环
-            		printf("\nYour height is wrong!!");
+            		//printf("\nYour height is wrong!!");
+			printf("\n你输入的身高有误，注意，单位为米！！！\n");
 	        	continue;
 	    	}
 	    	else break;
@@ -135,11 +142,13 @@ void ti_shi(struct Aman *q,int i)
 
    	 while(1)
 	{
-    		printf("\nPlease enter %d your weight in kg：",i+1);
+    		//printf("\nPlease enter %d your weight in kg：",i+1);
+		printf("\n请输入第%d个人的体重：",i+1);
        	 	if((scanf("%f",&q->ti))!=1 || q->ti>200 || q->ti<20)
 		{
 		    	while((ch = getchar()) != '\n' && ch != EOF);
-    	    		printf("\nYour weight is wrong!!");
+    	    		//printf("\nYour weight is wrong!!");
+			printf("\n你输入的体重出错，注意，单位为kg!");
     	    		continue;
     		}
 	    	else break;
@@ -147,11 +156,13 @@ void ti_shi(struct Aman *q,int i)
 	
 	while(1)
 	{
-		printf("\nPlease enter %d your age：",i+1);
+		//printf("\nPlease enter %d your age：",i+1);
+		printf("\n请输入第%d个人的年龄：",i+1);
 		if(scanf("%d",&q->age)!=1 || q->age>100 || q->age<3)
     		{	
 			while((ch = getchar()) != '\n' && ch != EOF);
-	    		printf("\nYour age is wrong!!");
+	    		//printf("\nYour age is wrong!!");
+			printf("\n你输入的年龄有误！过小或过大！");
 		    	continue;
     		}
 	    	else break;
@@ -159,11 +170,13 @@ void ti_shi(struct Aman *q,int i)
 	
 	while(1)
 	{
-		printf("\nPlease enter %d your gender：",i+1);
+		//printf("\nPlease enter %d your gender：",i+1);
+		printf("请输入第%d个人的性别(0代表女，1代表男)：",i+1);
 	    	if(scanf("%d",&q->xingbie)!=1 || q->xingbie!=0 && q->xingbie!=1)
 	    	{	
 			while((ch = getchar()) != '\n' && ch != EOF);
-	    		printf("\n0 for female, 1 for male.");
+	    		//printf("\n0 for female, 1 for male.");
+			printf("\n0代表女，1代表女！");
 	    		continue;
 	    	}
 	    	else break;
@@ -171,11 +184,13 @@ void ti_shi(struct Aman *q,int i)
 
     	while(1)
 	{
-		printf("\nPlease enter %d your neck size in cm：",i+1);
+		//printf("\nPlease enter %d your neck size in cm：",i+1);
+		printf("\n请输入第%d个人的颈围：",i+1);
 	     	if(scanf("%f",&q->jin)!=1 || q->jin>50 || q->jin<20)
 	    	{	
 			while((ch = getchar()) != '\n' && ch != EOF);
-		    	printf("\nYour neck size is wrong!!");
+		    	//printf("\nYour neck size is wrong!!");
+			printf("\n你输入的颈围有误，正常人的颈围在50cm～20cm之间！");
 		    	continue;
 	    	}
 	    	else break;
@@ -183,11 +198,13 @@ void ti_shi(struct Aman *q,int i)
 
    	 while(1)
 	{
-		printf("\nPlease enter %d your waist size in cm:",i+1);
-	    	if(scanf("%f",&q->yao)!=1 || q->yao>90 || q->yao<50)
+		//printf("\nPlease enter %d your waist size in cm:",i+1);
+		printf("请输入第%d个人的腰围：",i+1);
+	    	if(scanf("%f",&q->yao)!=1 || q->yao>110 || q->yao<50)
 	    	{	
 			while((ch = getchar()) != '\n' && ch != EOF);
-		   	printf("\nYour waist size is wrong!!");
+		   	//printf("\nYour waist size is wrong!!");
+			printf("\n你输入的腰围有误，正常人的腰围在110cm～50cm之间！");
 		    	continue;
     		}
 	    	else break;
@@ -195,11 +212,13 @@ void ti_shi(struct Aman *q,int i)
 	
 	while(1)
 	{
-		printf("\nPlease enter %d your hip size in cm:",i+1);
+		//printf("\nPlease enter %d your hip size in cm:",i+1);
+		printf("\n请输入第%d个人的臀围：",i+1);
 		if(scanf("%f",&q->tun)!=1 || q->tun>110 || q->tun<50)
 	    	{	
 			while((ch = getchar()) != '\n' && ch != EOF);
-	    		printf("\nYour hip size is wrong!!");
+	    		//printf("\nYour hip size is wrong!!");
+			printf("\n你输入的臀围有误，正常人的臀围在50cm～110cm之间！");
 	    		continue;
     		}
 	   	 else break;
@@ -208,12 +227,18 @@ void ti_shi(struct Aman *q,int i)
     	while(1)
 	{
 	int asdfghj=0;
-	printf("\nPlease enter %d your activity level：\n",i+1);
+	/*printf("\nPlease enter %d your activity level：\n",i+1);
 	printf("a, Sedentary (office work)\n");
 	printf("b,Light activity (exercise 1-3 days a week)\n");
 	printf("c,Moderate activity (exercise 3-5 days a week)\n");
 	printf("d,Very active (hard exercise 6-7 days a week)\n");
-	printf("e,Professional athlete\n");
+	printf("e,Professional athlete\n");*/
+	printf("\n请选择第%d个人的活动系数：",i+1);
+	printf("a,长期久坐（办公室工作）\n");
+	printf("b,偶尔运动（一周运动1～3次）\n");
+	printf("c,经常运动（一周运动3～4次）\n");
+	printf("d,很爱运动（一周运动6～7次）\n");
+	printf("e,专业运动员！");
     	printf("______\b\b\b\b");
 	scanf(" %c",&huo_don);
 	switch(huo_don)

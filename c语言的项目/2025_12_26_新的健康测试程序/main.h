@@ -34,9 +34,9 @@ struct health//每个人将根据输入的原始数据得到五个结果
 {
 	float BMI;
 	float BMR;
-	float BFP:
+	float BFP;
 	float FFMI;
-	float tun_yao_bi;
+	float yao_tun_bi;
 	struct health *next;
 };
 
@@ -44,7 +44,7 @@ struct health//每个人将根据输入的原始数据得到五个结果
 struct Aman *caret(int);//创建设链表函数的声明。
 void ti_shi(struct Aman *q,int i);
 struct health *health(struct Aman *head);
-void print_health(struct health *head);
+void print_health(struct health *head,struct Aman *kkk);
 void printfile(struct Aman *head);
 
 
