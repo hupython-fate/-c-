@@ -3,27 +3,31 @@
 int main(void)
 {
 	float qian_ka,qian_ka_tian;
-	while(1){
-	ti_shi();	     
-    	qian_ka=BMR()*huo_don*ka_jiao_hu_huan;
-	qian_ka_tian=BMR()*ka_jiao_hu_huan;
-	printf("\n");
-    	printf("==========Here is your health test result.==========\n");
-    	printf("you are bfp:%.2f%%\n",BFP());
-	printf("you are bmi:%.2f\n",ti/shen*shen);
-       	printf("you are whr:%.2f\n",yao/tun);
-        printf("you are ffmi:%.2f\n",FFMI(BFP()/100));
-    	printf("Your expected basal metabolic rate is %.2f kcal per day or %.3f kJ per day.\n",BMR(),qian_ka_tian);
-    	printf("Your expected total daily energy use is %.2f kcal or %.3f kJ.\n",BMR()*huo,qian_ka);
-	printf("\n\n");
-    	printf("==========Note: Your result depends on your data. If your data is wrong, your result will be wrong.==========\n");
-    	printf("========================================This result is for reference only.===================================\n");
-	printf("========================================I am not responsible for any problems.================================\n");
-	printf("\nIf you want to test again, please enter 666.");
-	printf("______\b\b\b\b\b");
-	scanf("%d",&kkk);
-	if(kkk==666) continue;
-	else break; 
-    }
+	int kkk;
+	struct Aman *head;
+	struct health *head2;
+	while(1)
+	{
+		printf("请问你想测多少人的数据？\n");
+		printf("请输入一个整数:");
+		scanf("%d",&a);//a是一个全局变量。
+		head=caret(a);//这个函数用链表获取用户的输入！哈哈哈.
+	//不过，随着输入的函数和数据储存的位置发生的改变，其它的函数也全部得跟着变
+	//要写一个把用户的输入变成文件的函数。
+		printfile(head);//函数返回类型应为void,参数是链表的头指针。这个函数的文件名怎么办？应该由用户决定。
+	//还可以写一个结构体，把三个多余的子函数统一为一个子函数，定义一个结构体变量就可以了。
+		head2=health();//这个函数的返回类型应为一个结构体变量，链表的头指针作为参数，可以创建两个单向链表，第二个用来储存根据第一个计算出来的结果。
+	//然后再写一个函数，把第二个单向链表的内容写成文件。
+	//这样，这个程序一共用了四个函数，两个单向链表，两个结构体类型。
+		print_health(head2);
+    		printf("==========Note: Your result depends on your data. If your data is wrong, your result will be wrong.==========\n");
+    		printf("========================================This result is for reference only.===================================\n");
+		printf("========================================I am not responsible for any problems.================================\n");
+		printf("\nIf you want to test again, please enter 666.");
+		printf("______\b\b\b\b\b");
+		scanf("%d",&kkk);
+		if(kkk==666) continue;
+		else break; 
+    	}
 	return 0;
 }
