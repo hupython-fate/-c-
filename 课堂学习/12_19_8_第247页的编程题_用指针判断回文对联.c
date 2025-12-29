@@ -10,13 +10,13 @@ int main(void)
 	char *p1,*p2,*p3;	
 	for(p1=str,p2=p1;p1<p2+strlen(str)-1;p1++)//打印出对应语句的ASCII码值列表，以便分析。
 	{
-		printf("%d",*p1);
-		h++;
+		printf("%d ",*p1);
+	/*	h++;
 		if(h==3)
 		{
 			h=0;
 			printf("\n");
-		}
+		}*/
 	}
 
 
