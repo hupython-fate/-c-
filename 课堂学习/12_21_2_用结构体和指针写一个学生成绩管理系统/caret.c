@@ -5,7 +5,7 @@
  *老实说，有点难度。不过我喜欢。
  * */
 int a,b;//a是科目数，b是人数.
-char name[Subject][30]={0};
+char name[Subject][30]={"语文","数学","英语","政治","地理","历史","物理","化学","生物"};
 int choice_caret=0;
 char filename[50]="学生成绩数据.bat";
 
@@ -14,18 +14,22 @@ int caret_main()
 {
 	//printf("\033[2J");  // 清除整个屏幕
 	printf("=========================欢迎来到新增界面！=========================\n");
-	printf("====================================================================\n");
+	printf("=                                                                  =\n");
 	printf("=                   1,查看之前的所有信息。                         =\n");
 	printf("=                   2,回退至主界面。                               =\n");
 	printf("=                   3,新增学生信息。                               =\n");
 	printf("=                   4,按成绩高低查看所有学生信息。                 =\n");
    	printf("           ↓ 请在此输入\n");
-   	printf("▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁\b\b\b\b\b\b\b\b\b\b");
+   	printf("            ▁▁▁▁▁▁▁▁▁▁▁▁▁\b\b\b\b\b\b\b\b\b\b");
    	scanf("%d",&choice_caret);
     	switch(choice_caret)
 	{
 		case 1:
 			cha_kan();//学会了文件读的我，已经有能力写这个函数了。
+			//查看完成后，还要继续留在新增界面，恩，递归调用这个函数？
+			//可行吗？会不会导致死递归？
+			//不会吧，有2这个选项。
+			caret_main();//递归调用
 			break;
 		case 2:
 			return 0;//直接结束这个函数的运行，而主函数就会开始循环，等同于回到主界面。
@@ -33,9 +37,11 @@ int caret_main()
 		case 3:
 			stu *q=caret();//使用新增函数
 			fprintf_caret(q);//把用户的输入写成文件
+			caret_main();
 			break;
 		case 4:
 			an_cheng_print();//定义一个函数把学生信息按从高到低输出。
+			caret_main();
 			break;
 	}
 	return 0;
@@ -46,31 +52,6 @@ void input_we()//函数的定义
 {
 	int i;//声明第一个局部变量
 	int k1;//第二个居部变量k1
-	while(1)
-	{
-		printf("请问您要统计几门学科的成绩：");
-		printf("___\b\b");//为了更优雅
-		k1=scanf("%d",&a);
-		if(a>Subject || a<=0)
-		{
-			printf("不好意思，这个系统最大的科目数为9,请您重新输入！\n");
-			continue;
-		}
-		if(k1!=1)
-		{
-			printf("不好意思，请不要调皮，请输入数字而不是其它，比如按了ctrl + d，或者是输入了abc之类的。\n");
-			printf("总而言之，请您重新输入！\n");
-			continue;
-		}
-		break;
-	}
-
-	//接下来询问每一门科目的名字
-	for(i=0;i<a;i++)
-	{
-		printf("请问第%d门科目的名字是：",i+1);
-		scanf("%s",&name[i]);//使用数组而不是结构体。
-	}
 	//接下来问要输入的学生数
 	while(1)
 	{
@@ -92,11 +73,8 @@ void input_we()//函数的定义
 
 	//接下来就是问每一个人的具体信息了
 	//这得定义一个结构体数组，最大容量为50,也就是hunman的值。
-	//这个结构体数组必须是声名在头文件中的。
-	
-								
-}//第一个函数总算写完了。也不难，就是需要耐心和时间。
-
+	//这个结构体数组必须是声名在头文件中的。						
+}
 //本文件的第2个子函数
 void input( stu *p,int i)
 {
@@ -115,16 +93,16 @@ void input( stu *p,int i)
 		switch(xuan)
 		{
 			case 'a':
-				p->nan_or_nv=a;	
+				p->nan_or_nv=1;	
 				break;
 			case 'b':
-				p->nan_or_nv=b;
+				p->nan_or_nv=0;
 				break;
 			case 'A':
-				p->nan_or_nv=a;
+				p->nan_or_nv=1;
 				break;
 			case 'B':
-				p->nan_or_nv=b;
+				p->nan_or_nv=0;
 				break;
 			default:
 				printf("不好意思，请不要乱输数据哦！\n");
@@ -148,7 +126,7 @@ void input( stu *p,int i)
 	}
 
 	//最后是学生的各个科目的成绩
-	for(j=0;j<a;j++)//a是声明在头文件中的全局变量，储存的是科目的数量
+	for(j=0;j<9;j++)//a是声明在头文件中的全局变量，储存的是科目的数量
 	{
 		while(1)
 		{
@@ -197,32 +175,33 @@ void input( stu *p,int i)
 }
 
 
-void fprintf_caret( stu *head)
+void fprintf_caret(stu *head)//把链表中的数据写入文件中，这是很重要的环节，我用","号来分隔不同的数据，方便读取。
 {
 	int i=0,j=0;
 	FILE *p;
-	if((p=fopen(filename,"w"))==NULL)
+	if((p=fopen(filename,"a"))==NULL)//有了"学生成绩数据.bat"这个文件后，要把w改成a
 	{
 		printf("error!!!");
 		return;
 	}
 	head=head->next;
-	fprintf(p,"\t姓名\t\t年龄\t\t性别\t\t");
-	for(i=0;i<a;i++)
-		fprintf(p,"%s\t",name[i]);
-	fprintf(p,"\n");
+	/*fprintf(p,"姓名,年龄,性别");//有了"学生成绩数据.bat"这个文件后，就可以把这一段注释掉。
+	for(i=0;i<9;i++)
+		fprintf(p,",%s",name[i]);//打印科目名
+	fprintf(p,"\n");*/
 	while(head!=NULL)
 	{
-		fprintf(p,"%10s \t %10d \t %c \t",head->name,head->age,head->nan_or_nv);
-		for(j=0;j<a;j++)
-			fprintf(p,"%d\t",head->chengji[j]);
+		fprintf(p,"%s,%d,%d",head->name,head->age,head->nan_or_nv);
+		for(j=0;j<9;j++)
+			fprintf(p,",%d",head->chengji[j]);
 		fprintf(p,"\n");
 		head=head->next;
 	}
+	fclose(p);
 }
 
 
-void cha_kan()
+void cha_kan()//这个函数会把文件的所有内容都打印出来。
 {
 	FILE *p;
 	if((p=fopen(filename,"r"))==NULL)
@@ -230,6 +209,7 @@ void cha_kan()
 		printf("error!!");
 		exit(0);//等价于return 0;
 	}
+	rewind(p);//把文件指针移到最开头。
 	char ch;
 	while(!feof(p))//到文件末尾会返回1,也就是说。这个操作能输出文件的全部内容。
 	{
@@ -240,21 +220,18 @@ void cha_kan()
 
 void an_cheng_print()
 {
+	//printf("aaa\n");
 	stu *head;
 	head=readfile();
+	
+	//pai_xu(head);
+
 	printlist(head);
 }
 
 stu *readfile()
 {
-	int i;
-	char **q=(char **)malloc(sizeof(char*)*4);//创建一个字符串数组。
-						  //之后还得为这个指针数组里的每一个指针分配内存
-	for(i=0;i<4;i++)
-		q[i]=(char *)malloc(sizeof(char)*20);//这是在分配每一行的大小。
-	//上面这几句，就是相当于char name[4][20];
-	//这样做的好处是动态改变数组的大小，而不是静态固定。
-
+	int i=0,j=0;
 	//首先要读文件，可以创建一个顺序表，把文件内容读入顺序表，然后在对顺序表进行排序，最后输出到终端。
 	FILE *p;
 	if((p=fopen(filename,"r"))==NULL)
@@ -262,12 +239,16 @@ stu *readfile()
 		printf("error!!");
 		exit(0);
 	}
-	fscanf(p,"%s %s %s %s",q[0],q[1],q[2],q[3]);
+	char buff[90];//刚才的问题就出现在这，现在没有问题了。
+	fgets(buff,90,p);//读取标题行。
+	char data_node[40];
+	char zhong[40];
+	int shu;
+	char node[40];
 	stu *p0,*p1,*p2;//创建设一个链表，用来存储文件的数据
-	i=0;
-	int j=0;
-	while(!feof(p))
+	while()
 	{
+		//printf("bbbbb\n");
 		if(i==0)
 		{
 			if((p0=(stu*)malloc(sizeof(stu)))==NULL)
@@ -275,10 +256,29 @@ stu *readfile()
 				printf("error!!");
 				return 0;
 			}
-			fscanf(p,"%s %d %c",p0->name,&p0->age,&p0->nan_or_nv);
-			for(j=0;j<9;j++)
+			fscanf(p,"%s",data_node);//经过实验，一个字符串读就会把一整行全部读取，所以不用再用其它转换说明了，读取了。真是令人意外。
+			printf("kkkk\n");
+
+			strcpy(zhong,strtok(data_node,","));//字符串分割函数
+						    //第一个参数是字符串名，第二个参数是分隔符
+						//返回值是一个char 类型的指针，相当于返回了一个字符串
+			strncpy(p0->name,zhong,sizeof(p0->name)-1);//比strcpy更安全的字符串复制函数；
+			p0->name[sizeof(p0->name)-1]='\0';//strncpy不会自动加上'\0',需要手动加上。
+
+			strcpy(zhong,strtok(NULL,","));//第二次调用时，第一个参数写NULL就行
+			shu=atoi(zhong);//把字符串转化成数字的库函数；
+			p0->age=shu;
+
+			strcpy(zhong,strtok(NULL,","));
+			shu=atoi(zhong);
+			p0->nan_or_nv=shu;
+
+			int asdf=0;
+			for(asdf=0;asdf<9;asdf++)//把9门成绩存入链表当中。
 			{
-				fscanf(p,"%f",&p0->chengji[j]);
+				strcpy(zhong,strtok(NULL,","));
+				shu=atoi(zhong);
+				p0->chengji[asdf]=shu;
 			}
 			p2=p0;
 		}
@@ -289,26 +289,58 @@ stu *readfile()
 				printf("error!");
 				return 0;
 			}
-			fscanf(p,"%s %d %c",p0->name,&p0->age,&p0->nan_or_nv);
-			for(j=0;j<9;j++)
+			fscanf(p,"%s",data_node);//经过实验，一个字符串读就会把一整行全部读取，所以不用再用其它转换说明了，读取了。真是令人意外。
+			printf("aaa\n");
+
+			strcpy(zhong,strtok(data_node,","));//字符串分割函数
+						    //第一个参数是字符串名，第二个参数是分隔符
+						//返回值是一个char 类型的指针，相当于返回了一个字符串
+			strcpy(p1->name,zhong);
+
+			printf("bbbb\n");
+
+			strcpy(zhong,strtok(NULL,","));//第二次调用时，第一个参数写NULL就行
+			shu=atoi(zhong);//把字符串转化成数字的库函数；
+			p1->age=shu;
+
+			strcpy(zhong,strtok(NULL,","));//性别的
+			shu=atoi(zhong);
+			p1->nan_or_nv=shu;
+
+			int asdf=0;
+			for(asdf=0;asdf<9;asdf++)//把9门成绩存入链表当中。
 			{
-				fscanf(p,"%f",&p0->chengji[j]);
+				strcpy(zhong,strtok(NULL,","));
+				shu=atoi(zhong);
+				p1->chengji[asdf]=shu;
 			}
 			p2->next=p1;
 			p2=p1;
 		}
+		i++;
 	}
-
+	p1->next=NULL;
+	fclose(p);
 	//用链表读取文件的部分就算写好了，但是不知道有没有读取成功，最好的验证方法是把这个链表打印出来。	
 	return p0;
 }
 
-void printlist(stu *head)
+void printlist(stu *head)//读取成功了，接下来进行排序，然后再打印出来就可以了。
 {
 	int i;
-	printf("%s %c %d",head->name,head->nan_or_nv,head->age);
-	for(i=0;i<9;i++)
-		printf(" %d ",head->chengji[i]);
-	printf("\n");
+	while(head->next!=NULL)
+	{
+		printf("%s,%d,%d",head->name,head->age,head->nan_or_nv);
+		/*for(i=0;i<9;i++)
+			printf(",%d",head->chengji[i]);*/
+		printf("\n");
+		head=head->next;
+	}
+}
+
+void pai_xu(stu *head)//使用冒泡排序？有没有比冒泡排序更好的算法？
+{
+
+
 
 }
