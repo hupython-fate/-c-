@@ -220,7 +220,6 @@ void cha_kan()//这个函数会把文件的所有内容都打印出来。
 
 void an_cheng_print()
 {
-	//printf("aaa\n");
 	stu *head;
 	head=readfile();
 	
@@ -229,11 +228,12 @@ void an_cheng_print()
 	printlist(head);
 }
 
-stu *readfile()
+stu *readfile()//这个文件中最重要的函数，没有有之一。
 {
-	int i=0,j=0;
 	//首先要读文件，可以创建一个顺序表，把文件内容读入顺序表，然后在对顺序表进行排序，最后输出到终端。
+	//printf("bbbb\n");
 	FILE *p;
+	int i=0;
 	if((p=fopen(filename,"r"))==NULL)
 	{
 		printf("error!!");
@@ -243,86 +243,47 @@ stu *readfile()
 	fgets(buff,90,p);//读取标题行。
 	char data_node[40];
 	char zhong[40];
+	char *zh2;
 	int shu;
-	char node[40];
-	stu *p0,*p1,*p2;//创建设一个链表，用来存储文件的数据
-	while()
+	stu *p0=NULL,*p1=NULL,*p2=NULL;//创建设一个链表，用来存储文件的数据
+	while(fgets(data_node,40,p)!=NULL)//读取一行
 	{
-		//printf("bbbbb\n");
+		if((p0=(stu*)malloc(sizeof(stu)))==NULL)
+		{
+			printf("error!!");
+			return 0;
+		}
+		int result = sscanf(data_node, 
+    		"%49[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+    	p0->name,
+    	&p0->age,
+    	&p0->nan_or_nv,
+    	&p0->chengji[0],
+    	&p0->chengji[1],
+    	&p0->chengji[2],
+    	&p0->chengji[3],
+    	&p0->chengji[4],
+    	&p0->chengji[5],
+ 	&p0->chengji[6],
+    	&p0->chengji[7],
+    	&p0->chengji[8]);//使用sscanf();直接把字符串写入结构体；
+	
 		if(i==0)
 		{
-			if((p0=(stu*)malloc(sizeof(stu)))==NULL)
-			{
-				printf("error!!");
-				return 0;
-			}
-			fscanf(p,"%s",data_node);//经过实验，一个字符串读就会把一整行全部读取，所以不用再用其它转换说明了，读取了。真是令人意外。
-			printf("kkkk\n");
-
-			strcpy(zhong,strtok(data_node,","));//字符串分割函数
-						    //第一个参数是字符串名，第二个参数是分隔符
-						//返回值是一个char 类型的指针，相当于返回了一个字符串
-			strncpy(p0->name,zhong,sizeof(p0->name)-1);//比strcpy更安全的字符串复制函数；
-			p0->name[sizeof(p0->name)-1]='\0';//strncpy不会自动加上'\0',需要手动加上。
-
-			strcpy(zhong,strtok(NULL,","));//第二次调用时，第一个参数写NULL就行
-			shu=atoi(zhong);//把字符串转化成数字的库函数；
-			p0->age=shu;
-
-			strcpy(zhong,strtok(NULL,","));
-			shu=atoi(zhong);
-			p0->nan_or_nv=shu;
-
-			int asdf=0;
-			for(asdf=0;asdf<9;asdf++)//把9门成绩存入链表当中。
-			{
-				strcpy(zhong,strtok(NULL,","));
-				shu=atoi(zhong);
-				p0->chengji[asdf]=shu;
-			}
-			p2=p0;
+			p2=p0;	//把p2指向第一个结点；//只执行一次
+			p1=p0;//p1是指向第一个结点的指针。
 		}
-		else 
+		else if(i>0)
 		{
-			if((p1=(stu*)malloc(sizeof(stu)))==NULL)
-			{
-				printf("error!");
-				return 0;
-			}
-			fscanf(p,"%s",data_node);//经过实验，一个字符串读就会把一整行全部读取，所以不用再用其它转换说明了，读取了。真是令人意外。
-			printf("aaa\n");
-
-			strcpy(zhong,strtok(data_node,","));//字符串分割函数
-						    //第一个参数是字符串名，第二个参数是分隔符
-						//返回值是一个char 类型的指针，相当于返回了一个字符串
-			strcpy(p1->name,zhong);
-
-			printf("bbbb\n");
-
-			strcpy(zhong,strtok(NULL,","));//第二次调用时，第一个参数写NULL就行
-			shu=atoi(zhong);//把字符串转化成数字的库函数；
-			p1->age=shu;
-
-			strcpy(zhong,strtok(NULL,","));//性别的
-			shu=atoi(zhong);
-			p1->nan_or_nv=shu;
-
-			int asdf=0;
-			for(asdf=0;asdf<9;asdf++)//把9门成绩存入链表当中。
-			{
-				strcpy(zhong,strtok(NULL,","));
-				shu=atoi(zhong);
-				p1->chengji[asdf]=shu;
-			}
-			p2->next=p1;
-			p2=p1;
+			p2->next=p0;//把第二个结点的地址放入第一个结点的指针域。//执行很多次
+			p2=p0;//很关键
 		}
 		i++;
 	}
-	p1->next=NULL;
+	p0->next=NULL;
 	fclose(p);
 	//用链表读取文件的部分就算写好了，但是不知道有没有读取成功，最好的验证方法是把这个链表打印出来。	
-	return p0;
+	return p1;
 }
 
 void printlist(stu *head)//读取成功了，接下来进行排序，然后再打印出来就可以了。
@@ -331,8 +292,8 @@ void printlist(stu *head)//读取成功了，接下来进行排序，然后再�
 	while(head->next!=NULL)
 	{
 		printf("%s,%d,%d",head->name,head->age,head->nan_or_nv);
-		/*for(i=0;i<9;i++)
-			printf(",%d",head->chengji[i]);*/
+		for(i=0;i<9;i++)
+			printf(",%d",head->chengji[i]);
 		printf("\n");
 		head=head->next;
 	}
