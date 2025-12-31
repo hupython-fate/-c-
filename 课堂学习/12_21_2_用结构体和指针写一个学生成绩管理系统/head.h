@@ -8,8 +8,8 @@ typedef struct stu stu;
 
 typedef struct stu//结构体类型的声明
 {
-	char name[20];
-	char nan_or_nv;//用a表示男性，用b表示女性
+	char name[30];
+	int nan_or_nv;//用1表示男性，用0表示女性
 	int age;//年龄。
 	int chengji[9];//用一个数组来储存学生的不同的成绩
 	stu *next;
@@ -30,3 +30,4 @@ void cha_kan();//查看选项。
 void an_cheng_print();//按成绩从到到低进行排序，也就是说，对顺序表进行排序操作。
 stu *readfile();
 void printlist(stu *);
+void pai_xu(stu *);
