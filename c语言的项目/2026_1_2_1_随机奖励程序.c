@@ -4,6 +4,20 @@
 #include <unistd.h>
 int main(void)
 {
+	char ch;
+	printf("请问你是否完成了今天的小进步？(y/n)");
+	printf("___\b\b\b");
+	scanf("%c",&ch);
+	if(ch!='y')
+	{
+		printf("完成了再来抽奖吧！\n");
+		return 0;
+	}
+
+
+
+
+
 	//用字符指针数组构建设一个奖励池。
     	char *reword[]={
 	"假如是晚上，泡一杯奶茶；假如是上午，泡一杯咖啡；",
@@ -22,7 +36,7 @@ int main(void)
 	"给自己的代码加一条清晰注释",
 	"整理一个常用命令/快捷键到笔记中",
 	"尝试用新方法重构一段旧代码（哪怕只有3行）",
-	"在 Stack Overflow 上帮别人回答一个问题"
+	"在 知乎或者CSDN 上帮别人回答一个问题"
 	};
 	//奖励池的内容可以慢慢添加。
 	int x=sizeof(reword)/sizeof(reword[0]);
@@ -36,9 +50,15 @@ int main(void)
 	int sui_ji_shu=rand() % x;
 	//生成的随机数为属于[0,x-1]
 	
-	//printf("sss\n");
-
 	int i=0;
+
+	for(i=0;i<5;i++)//增加期待用的。
+	{
+		printf("随机中～～～\n");
+		sleep(3);
+	}
+
+	i=0;
 	while(i<=sui_ji_shu)
 	{
 		//printf("ddd\n");
