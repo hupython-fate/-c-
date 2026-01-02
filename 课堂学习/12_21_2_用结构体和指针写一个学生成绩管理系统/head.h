@@ -26,9 +26,19 @@ int caret_main();//caret文件的主函数
 void input_we();//函数的声明
 stu *caret();//新增界面的主函数，创建一个动态列表。
 void input(stu *,int );
-void writefile(stu *);//把用户的输入写入一个文件中
+void writefile(stu *,char *);//把用户的输入写入一个文件中
 void cha_kan();//查看选项。
 void an_cheng_print();//按成绩从到到低进行排序，也就是说，对顺序表进行排序操作。
 stu *readfile();
 void printlist(stu *);
 void pai_xu(stu *he);
+
+
+//第二个文件
+void del_main();
+
+//第三个文件
+void query_main();
+
+//第四个文件
+void modify_main();
