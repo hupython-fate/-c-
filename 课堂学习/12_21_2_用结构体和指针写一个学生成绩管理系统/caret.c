@@ -1,58 +1,39 @@
 #include "head.h"
 
 /*
- *新增函数放在这个文件中，其中caret()作为本文件中的主函数，主要实现新增学生的信息的功能，并且要把用户的输入转化为文件。
+ *新增函数放在这个文件中，其中caret_main()作为本文件中的主函数，主要实现新增学生的信息的功能，并且要把用户的输入转化为文件。
  *老实说，有点难度。不过我喜欢。
- * */
-int a,b;//a是科目数，b是人数.
+ */
+
+//全局变量区。
+int b;//b是人数.
 char name[Subject][30]={"语文","数学","英语","政治","地理","历史","物理","化学","生物"};
 int choice_caret=0;
 char filename[50]="学生成绩数据.bat";
+int size=0;//用于记录从硬盘读文件时的链表的长度的变量
 
-//这个文件的主函数
-int caret_main()
+//第一个功能。
+void cha_kan()//这个函数会把文件的所有内容都打印出来。
 {
-	//printf("\033[2J");  // 清除整个屏幕
-	printf("=========================欢迎来到新增界面！=========================\n");
-	printf("=                                                                  =\n");
-	printf("=                   1,查看之前的所有信息。                         =\n");
-	printf("=                   2,回退至主界面。                               =\n");
-	printf("=                   3,新增学生信息。                               =\n");
-	printf("=                   4,按成绩高低查看所有学生信息。                 =\n");
-   	printf("           ↓ 请在此输入\n");
-   	printf("            ▁▁▁▁▁▁▁▁▁▁▁▁▁\b\b\b\b\b\b\b\b\b\b");
-   	scanf("%d",&choice_caret);
-    	switch(choice_caret)
+	FILE *p;
+	if((p=fopen(filename,"r"))==NULL)
 	{
-		case 1:
-			cha_kan();//学会了文件读的我，已经有能力写这个函数了。
-			//查看完成后，还要继续留在新增界面，恩，递归调用这个函数？
-			//可行吗？会不会导致死递归？
-			//不会吧，有2这个选项。
-			caret_main();//递归调用
-			break;
-		case 2:
-			return 0;//直接结束这个函数的运行，而主函数就会开始循环，等同于回到主界面。
-			break;
-		case 3:
-			stu *q=caret();//使用新增函数
-			fprintf_caret(q);//把用户的输入写成文件
-			caret_main();
-			break;
-		case 4:
-			an_cheng_print();//定义一个函数把学生信息按从高到低输出。
-			caret_main();
-			break;
+		printf("error!!");
+		exit(0);//等价于return 0;
 	}
-	return 0;
+	rewind(p);//把文件指针移到最开头。
+	char ch;
+	while(!feof(p))//到文件末尾会返回1,也就是说。这个操作能输出文件的全部内容。
+	{
+		ch=fgetc(p);//字符读
+		printf("%c",ch);
+	}
 }
 
-//这可以作为新增界面函数的第一个子函数。
+//第三个功能的一部分
 void input_we()//函数的定义
 {
-	int i;//声明第一个局部变量
-	int k1;//第二个居部变量k1
-	//接下来问要输入的学生数
+	int k1;
 	while(1)
 	{
 		printf("请问您要输入多少个人的成绩？（问人数）：");
@@ -69,19 +50,15 @@ void input_we()//函数的定义
 			continue;
 		}
 		break;
-	}
-
-	//接下来就是问每一个人的具体信息了
-	//这得定义一个结构体数组，最大容量为50,也就是hunman的值。
-	//这个结构体数组必须是声名在头文件中的。						
+	}			
 }
-//本文件的第2个子函数
+//第三个功能的另一部分
 void input( stu *p,int i)
 {
 	char xuan;
 	int j=0,k1=0;//声明第四个局部变量
 	printf("请输入第%d个学生的姓名：",i+1);
-	scanf("%s",&p->name);
+	scanf("%s",p->name);
 	while(1)
 	{
 		printf("请选择第%d个学生%s的性别：\n",i+1,p->name);
@@ -143,11 +120,11 @@ void input( stu *p,int i)
 	}
 }
 
-//本文件的第三个子函数
- stu *caret()//用户输入的人数和输入的科目数可以作为全局变量，没有必要传参。
+//第三个功能的主要部分之一。
+stu *caret()//用户输入的人数和输入的科目数可以作为全局变量，没有必要传参。
 {
 	input_we();
-	struct stu *q,*p,*head;
+	stu *q,*p,*head;
 	int i;
 	if((head=(stu*)malloc(sizeof( stu)))==NULL)
 	{
@@ -174,10 +151,10 @@ void input( stu *p,int i)
 	return head;
 }
 
-
-void fprintf_caret(stu *head)//把链表中的数据写入文件中，这是很重要的环节，我用","号来分隔不同的数据，方便读取。
+//第三个功能的主要部分之2.
+void writefile(stu *head)//把链表中的数据写入文件中，这是很重要的环节，我用","号来分隔不同的数据，方便读取。
 {
-	int i=0,j=0;
+	int j=0;
 	FILE *p;
 	if((p=fopen(filename,"a"))==NULL)//有了"学生成绩数据.bat"这个文件后，要把w改成a
 	{
@@ -186,14 +163,18 @@ void fprintf_caret(stu *head)//把链表中的数据写入文件中，这是很�
 	}
 	head=head->next;
 	/*fprintf(p,"姓名,年龄,性别");//有了"学生成绩数据.bat"这个文件后，就可以把这一段注释掉。
-	for(i=0;i<9;i++)
-		fprintf(p,",%s",name[i]);//打印科目名
+	for(j=0;j<9;j++)
+		fprintf(p,",%s",name[j]);//打印科目名
 	fprintf(p,"\n");*/
+	head->sum=0;
 	while(head!=NULL)
 	{
 		fprintf(p,"%s,%d,%d",head->name,head->age,head->nan_or_nv);
 		for(j=0;j<9;j++)
 			fprintf(p,",%d",head->chengji[j]);
+		for(j=0;j<9;j++)
+			head->sum+=head->chengji[j];
+		fprintf(p,",%d",head->sum);
 		fprintf(p,"\n");
 		head=head->next;
 	}
@@ -201,33 +182,7 @@ void fprintf_caret(stu *head)//把链表中的数据写入文件中，这是很�
 }
 
 
-void cha_kan()//这个函数会把文件的所有内容都打印出来。
-{
-	FILE *p;
-	if((p=fopen(filename,"r"))==NULL)
-	{
-		printf("error!!");
-		exit(0);//等价于return 0;
-	}
-	rewind(p);//把文件指针移到最开头。
-	char ch;
-	while(!feof(p))//到文件末尾会返回1,也就是说。这个操作能输出文件的全部内容。
-	{
-		ch=fgetc(p);//字符读
-		printf("%c",ch);
-	}
-}
-
-void an_cheng_print()
-{
-	stu *head;
-	head=readfile();
-	
-	//pai_xu(head);
-
-	printlist(head);
-}
-
+//第四个功能的重要函数。
 stu *readfile()//这个文件中最重要的函数，没有有之一。
 {
 	//首先要读文件，可以创建一个顺序表，把文件内容读入顺序表，然后在对顺序表进行排序，最后输出到终端。
@@ -242,9 +197,6 @@ stu *readfile()//这个文件中最重要的函数，没有有之一。
 	char buff[90];//刚才的问题就出现在这，现在没有问题了。
 	fgets(buff,90,p);//读取标题行。
 	char data_node[40];
-	char zhong[40];
-	char *zh2;
-	int shu;
 	stu *p0=NULL,*p1=NULL,*p2=NULL;//创建设一个链表，用来存储文件的数据
 	while(fgets(data_node,40,p)!=NULL)//读取一行
 	{
@@ -253,8 +205,8 @@ stu *readfile()//这个文件中最重要的函数，没有有之一。
 			printf("error!!");
 			return 0;
 		}
-		int result = sscanf(data_node, 
-    		"%49[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+		sscanf(data_node, 
+    		"%49[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
     	p0->name,
     	&p0->age,
     	&p0->nan_or_nv,
@@ -266,7 +218,8 @@ stu *readfile()//这个文件中最重要的函数，没有有之一。
     	&p0->chengji[5],
  	&p0->chengji[6],
     	&p0->chengji[7],
-    	&p0->chengji[8]);//使用sscanf();直接把字符串写入结构体；
+    	&p0->chengji[8],
+	&p0->sum);//使用sscanf();直接把字符串写入结构体；
 	
 		if(i==0)
 		{
@@ -279,6 +232,7 @@ stu *readfile()//这个文件中最重要的函数，没有有之一。
 			p2=p0;//很关键
 		}
 		i++;
+		size++;//储存读文件时链表的长度。
 	}
 	p0->next=NULL;
 	fclose(p);
@@ -286,22 +240,125 @@ stu *readfile()//这个文件中最重要的函数，没有有之一。
 	return p1;
 }
 
+//还是第四个功能的，负责排序
+void pai_xu(stu *head)//使用冒泡排序？有没有比冒泡排序更好的算法？
+		      //有，插入算法。
+{//对链表使用冒泡排序有两种方式，一种是改变结点与结点之间的联接关系，还有一种是不改变结点之间的关系，改变结点的数据。很明显，前者比后者高效。
+	int i,j;
+	int zhong;
+	int kkk=0;
+	stu *zh=head;
+	//要根据每个人的总分进行链表的排序。
+	//链表的排序吗？
+	//先用冒泡排序实现吧	
+	stu k;//还需要一个中间的结构体变量，用来交换。
+	for(i=0;i<size-1;i++)//不行啊，链表不是数组，不支持随机访问啊//用两个变量不就得了？哈哈//随然不支持随机访问，但是支持通过指针和箭头运算符层层访问啊。
+	{
+		zh=head;
+		for(j=0;j<size-i;j++)
+		{
+			if(zh->sum  <  zh->next->sum)//比较前一个结点的数据和后一个结点的数据
+			{
+				strcpy(k.name,zh->next->name);//交换名字
+				strcpy(zh->next->name,zh->name);
+				strcpy(zh->name,k.name);
+				
+				k.age=zh->next->age;//交换年龄
+				zh->next->age=zh->age;
+				zh->age=k.age;
+
+				k.nan_or_nv=zh->next->nan_or_nv;
+				zh->next->nan_or_nv=zh->nan_or_nv;
+				zh->nan_or_nv=k.nan_or_nv;
+
+				int z=0;
+				for(z=0;z<9;z++)//交换9门成绩
+				{
+					k.chengji[z]=zh->next->chengji[z];
+					zh->next->chengji[z]=zh->chengji[z];
+					zh->chengji[z]=k.chengji[z];
+				}
+				
+				k.sum=zh->next->sum;//最后交换总分
+				zh->next->sum=zh->sum;
+				zh->sum=k.sum;
+			}
+			zh=zh->next;//移动到下一个结点
+			if(zh->next==NULL) break;
+		}
+	}
+	//写到这似乎没有什么问题，恩，试一下就知道了。
+}
+
+//第四个功能的输出函数，负责把读取到并排序好的内容输出到终端里。
 void printlist(stu *head)//读取成功了，接下来进行排序，然后再打印出来就可以了。
 {
 	int i;
-	while(head->next!=NULL)
+	while(head!=NULL)
 	{
 		printf("%s,%d,%d",head->name,head->age,head->nan_or_nv);
 		for(i=0;i<9;i++)
 			printf(",%d",head->chengji[i]);
+		printf(",%d",head->sum);
 		printf("\n");
 		head=head->next;
 	}
 }
 
-void pai_xu(stu *head)//使用冒泡排序？有没有比冒泡排序更好的算法？
+//第四个功能的主调函数，把前三个子函数集中起来调用。
+void an_cheng_print()
 {
-
-
-
+	stu *he;
+	he=readfile();
+	pai_xu(he);
+	printlist(he);
 }
+
+//这个文件的主函数
+int caret_main()
+{
+	//printf("\033[2J");  // 清除整个屏幕
+	printf("=========================欢迎来到新增界面！=========================\n");
+	printf("=                                                                  =\n");
+	printf("=                   1,查看之前的所有信息。                         =\n");
+	printf("=                   2,回退至主界面。                               =\n");
+	printf("=                   3,新增学生信息。                               =\n");
+	printf("=                   4,按成绩高低查看所有学生信息。                 =\n");
+   	printf("           ↓ 请在此输入\n");
+   	printf("            ▁▁▁▁▁▁▁▁▁▁▁▁▁\b\b\b\b\b\b\b\b\b\b");
+   	scanf("%d",&choice_caret);
+    	switch(choice_caret)
+	{
+		case 1:
+			cha_kan();//学会了文件读的我，已经有能力写这个函数了。
+			//查看完成后，还要继续留在新增界面，恩，递归调用这个函数？
+			//可行吗？会不会导致死递归？
+			//不会吧，有2这个选项。
+			caret_main();//递归调用
+			break;
+		case 2:
+			return 0;//直接结束这个函数的运行，而主函数就会开始循环，等同于回到主界面。
+			break;
+		case 3:
+			stu *q=caret();//使用新增函数
+			writefile(q);//把用户的输入写成文件
+			caret_main();
+			break;
+		case 4:
+			an_cheng_print();//定义一个函数把学生信息按从高到低输出。
+			caret_main();
+			break;
+	}
+	return 0;
+}
+//
+//
+//以上就是作为新增界面的所有函数。
+//这个项目最难的就是链表的各种算法和文件读写。解决了这两点，这个项目就没有什么难度了。
+//
+//
+//
+//哈哈哈，成功了，终于成功了！！链表的冒泡排序。
+//
+//这个子模块终于写完了，哈哈哈！
+
