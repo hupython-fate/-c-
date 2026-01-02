@@ -30,13 +30,13 @@ int main(void)
 				caret_main();//新增
 				break;
 			case 'b':
-				//del_main();//删除
+				del_main();//删除
 				break;
 			case 'c':
-				//query_main();//查询
+				query_main();//查询
 				break;
 			case 'd':
-				//modify_main();//修改
+				modify_main();//修改
 				break;
 			case 'e':
 				printf("已退出！");

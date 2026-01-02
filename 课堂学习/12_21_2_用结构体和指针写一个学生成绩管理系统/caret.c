@@ -152,11 +152,11 @@ stu *caret()//用户输入的人数和输入的科目数可以作为全局变量
 }
 
 //第三个功能的主要部分之2.
-void writefile(stu *head)//把链表中的数据写入文件中，这是很重要的环节，我用","号来分隔不同的数据，方便读取。
+void writefile(stu *head,char *mmm)//把链表中的数据写入文件中，这是很重要的环节，我用","号来分隔不同的数据，方便读取。
 {
 	int j=0;
 	FILE *p;
-	if((p=fopen(filename,"a"))==NULL)//有了"学生成绩数据.bat"这个文件后，要把w改成a
+	if((p=fopen(filename,mmm))==NULL)//有了"学生成绩数据.bat"这个文件后，要把w改成a
 	{
 		printf("error!!!");
 		return;
@@ -341,7 +341,7 @@ int caret_main()
 			break;
 		case 3:
 			stu *q=caret();//使用新增函数
-			writefile(q);//把用户的输入写成文件
+			writefile(q,"a");//把用户的输入写成文件
 			caret_main();
 			break;
 		case 4:
