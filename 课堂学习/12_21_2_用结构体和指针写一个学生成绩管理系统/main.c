@@ -1,18 +1,17 @@
 #include "head.h"
 
+void clear_input_buffer() {//一个很重要的应对输入时的问题的函数。
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 int main(void)
 {
 	int i=0;
 	while(1)
 	{
-		if(i!=0)
-		{
-		char ch;
-		while((ch=getchar())!='\n');
-		}
 		char choice=0;
-		int tui_chu=0;
-		//printf("\033[2J");
+		printf("\033[2J");//清屏用的。
 		printf("=================欢迎来到学生成绩管理系统！==================\n");
 		printf("=                                                            =\n");
 		printf("=                   a,新增学生信息。                         =\n");
@@ -24,6 +23,7 @@ int main(void)
 		printf("\n\n");
 		printf("请输入你的选择：____\b\b\b\b");
 		scanf("%c",&choice);//这个变量可以设为全局变量。
+		clear_input_buffer();//清空缓冲区。
 		switch(choice)
 		{
 			case 'a':
@@ -40,9 +40,13 @@ int main(void)
 				break;
 			case 'e':
 				printf("已退出！");
-				tui_chu=1;
+				return 0;
+			default:
+				printf("您输入的选项不在选择范围内！\n");
+				printf("请重新输入！\n");
+				sleep(3);
+				continue;
 		}
-		if(tui_chu) break;
 	}
 	return 0;
 }

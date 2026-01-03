@@ -21,18 +21,13 @@ extern int b;//b的值为用户输入的学生人数。
 	
 extern char filename[50];//使这个文件名阔展到整个程序
 
+
+//在这里声名的函数是为了让这个函数在其它文件中被调用，如果只在自己的文件中被调用，那么就不用写到头文件中来。
+
 //第一个文件
 int caret_main();//caret文件的主函数
-void input_we();//函数的声明
-stu *caret();//新增界面的主函数，创建一个动态列表。
-void input(stu *,int );
 void writefile(stu *,char *);//把用户的输入写入一个文件中
-void cha_kan();//查看选项。
-void an_cheng_print();//按成绩从到到低进行排序，也就是说，对顺序表进行排序操作。
 stu *readfile();
-void printlist(stu *);
-void pai_xu(stu *he);
-
 
 //第二个文件
 void del_main();
@@ -42,3 +37,5 @@ void query_main();
 
 //第四个文件
 void modify_main();
+
+void clear_input_buffer();//清空缓冲区的函数。

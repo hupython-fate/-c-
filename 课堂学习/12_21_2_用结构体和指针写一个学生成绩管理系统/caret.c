@@ -22,26 +22,42 @@ void cha_kan()//这个函数会把文件的所有内容都打印出来。
 		exit(0);//等价于return 0;
 	}
 	rewind(p);//把文件指针移到最开头。
-	char ch;
-	while(!feof(p))//到文件末尾会返回1,也就是说。这个操作能输出文件的全部内容。
+	char ch[1000];
+	if((fgets(ch,1000,p))==NULL)
 	{
-		ch=fgetc(p);//字符读
-		printf("%c",ch);
+		printf("此文件内容为空，可通过新增功能来为文件增加内容。\n");
 	}
+	else
+	{
+		while((fgets(ch,1000,p))!=NULL)//到文件末尾会返回1,也就是说。这个操作能输出文件的全部内容。
+			printf("%s",ch);
+		printf("此文件内容已经被读完，如果为空，那说名文件里没有内容。\n");
+	}
+	sleep(5);//停止5秒让用户看清内容。
 }
 
 //第三个功能的一部分
 void input_we()//函数的定义
 {
 	int k1;
+	char ch;
 	while(1)
 	{
 		printf("请问您要输入多少个人的成绩？（问人数）：");
 		k1=scanf("%d",&b);
+		clear_input_buffer();//清空缓冲区。
 		if(b<0)
 		{
 			printf("不好意思，您的输入有误，请您重新输入！\n");
 			continue;
+		}
+		else if(b>1000)
+		{
+			printf("您确定输这么多吗？虽然本程序能承受得住，但是输这么多会手酸吧！(y/n)");
+			scanf("%c",&ch);
+			clear_input_buffer();//清空缓冲区。
+			if (ch=='y') break;
+			else continue;
 		}
 		if(k1!=1)
 		{
@@ -59,6 +75,7 @@ void input( stu *p,int i)
 	int j=0,k1=0;//声明第四个局部变量
 	printf("请输入第%d个学生的姓名：",i+1);
 	scanf("%s",p->name);
+	clear_input_buffer();//清空缓冲区。
 	while(1)
 	{
 		printf("请选择第%d个学生%s的性别：\n",i+1,p->name);
@@ -67,6 +84,7 @@ void input( stu *p,int i)
 		printf("您的选择：");
 		printf("___\b\b");
 		scanf("%c",&xuan);
+		clear_input_buffer();//清空缓冲区。
 		switch(xuan)
 		{
 			case 'a':
@@ -93,7 +111,8 @@ void input( stu *p,int i)
 	{
 			printf("请输入第%d个学生%s的年龄：",i+1,p->name);
 			k1=scanf("%d",&p->age);
-			if(p->age>90 || p->age<0 || k1!=1)
+			clear_input_buffer();//清空缓冲区。
+			if(p->age>80 || p->age<9 || k1!=1)
 			{
 				printf("请不要乱输数据！\n");
 				printf("请重新输入！\n");
@@ -109,8 +128,10 @@ void input( stu *p,int i)
 		{
 			printf("请您输入第%d个学生%s的%s科目的成绩：",i+1,p->name,name[j]);
 			k1=scanf("%d",&p->chengji[j]);
-			if(k1!=1)
+			clear_input_buffer();//清空缓冲区。
+			if(k1!=1 || p->chengji[j]>100 || p->chengji[j]<0)
 			{
+				printf("分值为百分制！\n");
 				printf("请不要乱输数据！\n");
 				printf("请重新输入！\n");
 				continue;
@@ -151,94 +172,6 @@ stu *caret()//用户输入的人数和输入的科目数可以作为全局变量
 	return head;
 }
 
-//第三个功能的主要部分之2.
-void writefile(stu *head,char *mmm)//把链表中的数据写入文件中，这是很重要的环节，我用","号来分隔不同的数据，方便读取。
-{
-	int j=0;
-	FILE *p;
-	if((p=fopen(filename,mmm))==NULL)//有了"学生成绩数据.bat"这个文件后，要把w改成a
-	{
-		printf("error!!!");
-		return;
-	}
-	head=head->next;
-	/*fprintf(p,"姓名,年龄,性别");//有了"学生成绩数据.bat"这个文件后，就可以把这一段注释掉。
-	for(j=0;j<9;j++)
-		fprintf(p,",%s",name[j]);//打印科目名
-	fprintf(p,"\n");*/
-	head->sum=0;
-	while(head!=NULL)
-	{
-		fprintf(p,"%s,%d,%d",head->name,head->age,head->nan_or_nv);
-		for(j=0;j<9;j++)
-			fprintf(p,",%d",head->chengji[j]);
-		for(j=0;j<9;j++)
-			head->sum+=head->chengji[j];
-		fprintf(p,",%d",head->sum);
-		fprintf(p,"\n");
-		head=head->next;
-	}
-	fclose(p);
-}
-
-
-//第四个功能的重要函数。
-stu *readfile()//这个文件中最重要的函数，没有有之一。
-{
-	//首先要读文件，可以创建一个顺序表，把文件内容读入顺序表，然后在对顺序表进行排序，最后输出到终端。
-	//printf("bbbb\n");
-	FILE *p;
-	int i=0;
-	if((p=fopen(filename,"r"))==NULL)
-	{
-		printf("error!!");
-		exit(0);
-	}
-	char buff[90];//刚才的问题就出现在这，现在没有问题了。
-	fgets(buff,90,p);//读取标题行。
-	char data_node[40];
-	stu *p0=NULL,*p1=NULL,*p2=NULL;//创建设一个链表，用来存储文件的数据
-	while(fgets(data_node,40,p)!=NULL)//读取一行
-	{
-		if((p0=(stu*)malloc(sizeof(stu)))==NULL)
-		{
-			printf("error!!");
-			return 0;
-		}
-		sscanf(data_node, 
-    		"%49[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-    	p0->name,
-    	&p0->age,
-    	&p0->nan_or_nv,
-    	&p0->chengji[0],
-    	&p0->chengji[1],
-    	&p0->chengji[2],
-    	&p0->chengji[3],
-    	&p0->chengji[4],
-    	&p0->chengji[5],
- 	&p0->chengji[6],
-    	&p0->chengji[7],
-    	&p0->chengji[8],
-	&p0->sum);//使用sscanf();直接把字符串写入结构体；
-	
-		if(i==0)
-		{
-			p2=p0;	//把p2指向第一个结点；//只执行一次
-			p1=p0;//p1是指向第一个结点的指针。
-		}
-		else if(i>0)
-		{
-			p2->next=p0;//把第二个结点的地址放入第一个结点的指针域。//执行很多次
-			p2=p0;//很关键
-		}
-		i++;
-		size++;//储存读文件时链表的长度。
-	}
-	p0->next=NULL;
-	fclose(p);
-	//用链表读取文件的部分就算写好了，但是不知道有没有读取成功，最好的验证方法是把这个链表打印出来。	
-	return p1;
-}
 
 //还是第四个功能的，负责排序
 void pai_xu(stu *head)//使用冒泡排序？有没有比冒泡排序更好的算法？
@@ -317,16 +250,17 @@ void an_cheng_print()
 //这个文件的主函数
 int caret_main()
 {
-	//printf("\033[2J");  // 清除整个屏幕
+	printf("\033[2J");  // 清除整个屏幕
 	printf("=========================欢迎来到新增界面！=========================\n");
 	printf("=                                                                  =\n");
 	printf("=                   1,查看之前的所有信息。                         =\n");
 	printf("=                   2,回退至主界面。                               =\n");
 	printf("=                   3,新增学生信息。                               =\n");
 	printf("=                   4,按成绩高低查看所有学生信息。                 =\n");
-   	printf("           ↓ 请在此输入\n");
-   	printf("            ▁▁▁▁▁▁▁▁▁▁▁▁▁\b\b\b\b\b\b\b\b\b\b");
+   	printf("↓ 请在此输入\n");
+   	printf("▁▁▁▁▁▁▁▁▁▁▁▁▁\b\b\b\b\b\b\b\b\b\b");
    	scanf("%d",&choice_caret);
+	clear_input_buffer();
     	switch(choice_caret)
 	{
 		case 1:
@@ -348,6 +282,11 @@ int caret_main()
 			an_cheng_print();//定义一个函数把学生信息按从高到低输出。
 			caret_main();
 			break;
+		default://难道这里的关键字可以自己任意填吗？不可以。
+			printf("您输入的数不在选项之内。！！\n");
+			printf("请重新输入！\n");
+			sleep(3);
+			caret_main();//递归调用，等同于循环。
 	}
 	return 0;
 }
