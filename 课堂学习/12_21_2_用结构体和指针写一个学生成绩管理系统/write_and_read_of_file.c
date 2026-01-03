@@ -84,7 +84,6 @@ stu *readfile()//这个文件中最重要的函数，没有有之一。
 			p2=p0;//很关键
 		}
 		i++;
-		size++;//储存读文件时链表的长度。
 	}
 	p0->next=NULL;
 	fclose(p);
