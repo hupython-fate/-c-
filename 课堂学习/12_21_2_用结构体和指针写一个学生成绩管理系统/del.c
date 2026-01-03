@@ -16,6 +16,7 @@ void del_name()
 	printf("2,首个。\n");
 	printf("____\b\b\b");
 	scanf("%d",&ch);
+	clear_input_buffer();//清空缓冲区。
 	switch(ch)
 	{
 		case 1:
@@ -58,6 +59,7 @@ void del_age()
 	printf("2,首个。\n");
 	printf("____\b\b\b");
 	scanf("%d",&ch);
+	clear_input_buffer();//清空缓冲区。
 	switch(ch)
 	{
 		case 1:
@@ -176,18 +178,18 @@ void del_sum()
 void del_main()
 {
 	int choice=0;
-	while(1)
-	{
-		printf("=======================================\n");
-		printf("===========欢迎来到删除界面！==========\n");
-		printf("=                                     =\n");
-		printf("=           1,根据名字删除。          =\n");
-		printf("=           2,根据年龄删除。          =\n");
-		printf("=           3,根据性别删除。          =\n");
-		printf("=           4,根据总分删除。          =\n");
-		printf("=           5,回退至主界面。          =\n");
+		printf("\033[2J");//清屏用的。
+		printf("=====================================================\n");
+		printf("===================欢迎来到删除界面！================\n");
+		printf("=           	                          	     =\n");
+		printf("=          	 1,根据名字删除。                    =\n");
+		printf("=         	 2,根据年龄删除。          	     =\n");
+		printf("=          	 3,根据性别删除。         	     =\n");
+		printf("=          	 4,根据总分删除。         	     =\n");
+		printf("=           	 5,回退至主界面。         	     =\n");
 		printf("请输入你的选择：__\b\b");
 		scanf("%d",&choice);
+		clear_input_buffer();
 		switch(choice)
 		{
 			case 1:
@@ -209,8 +211,12 @@ void del_main()
 			case 5:
 				return;
 				break;
+			default:
+				printf("您输入的选项不在选择范围内！\n");
+				printf("请重新输入！\n");
+				sleep(3);
+				del_main();
 		}
-	}
 }
 
 //啊勒？写完这个文件竟然只用了几分钟？因为最难的已经被攻克了吗？哈哈哈。

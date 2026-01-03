@@ -173,8 +173,7 @@ void query_sum()
 void query_main()
 {
 	int choice=0;
-	while(1)
-	{
+		printf("\033[2J");//清屏用的。
 		printf("==============================================\n");
 		printf("=================欢迎来到查询界面=============\n");
 		printf("=                                            =\n");
@@ -183,8 +182,9 @@ void query_main()
 		printf("=              3,按性别查询。                =\n");
 		printf("=              4,按总分查询。                =\n");
 		printf("=              5,回退至主界面。              =\n");
-		printf("____\b\b\b");
+		printf("请输入你的选择：___\b\b\b");
 		scanf("%d",&choice);
+		clear_input_buffer();
 		switch(choice)
 		{
 			case 1:
@@ -206,6 +206,11 @@ void query_main()
 			case 5:
 				return;
 				break;
+
+			default:
+				printf("您输入的选项不在选择范围内！\n");
+				printf("请重新输入！\n");
+				sleep(3);
+				query_main();
 		}
-	}
 }
