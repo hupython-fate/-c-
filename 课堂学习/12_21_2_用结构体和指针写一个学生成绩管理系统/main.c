@@ -10,6 +10,7 @@ int main(void)
 	int i=0;
 	while(1)
 	{
+		readfile();
 		char choice=0;
 		printf("\033[2J");//清屏用的。
 		printf("=================欢迎来到学生成绩管理系统！==================\n");
@@ -47,6 +48,7 @@ int main(void)
 				sleep(3);
 				continue;
 		}
+		writefile();
 	}
 	return 0;
 }
