@@ -1,0 +1,331 @@
+# C语言位运算符详解
+
+既然你对其他运算符都比较了解，我们来**专门攻克位运算符**。C语言共有6个位运算符：
+
+| 运算符 | 名称 | 描述 |
+|--------|------|------|
+| `&` | 按位与 | 两个位都为1时，结果才为1 |
+| `|` | 按位或 | 两个位有一个为1时，结果就为1 |
+| `^` | 按位异或 | 两个位不同时，结果为1 |
+| `~` | 按位取反 | 所有位取反（0变1，1变0） |
+| `<<` | 左移 | 所有位向左移动，右边补0 |
+| `>>` | 右移 | 所有位向右移动 |
+
+## 1. **按位与 `&`**（你已了解，简单复习）
+
+```c
+int a = 5;    // 0101
+int b = 3;    // 0011
+int c = a & b; // 0001 (1)
+
+// 用途：掩码、清零特定位、检查特定位
+```
+
+## 2. **按位或 `|`**（有一个为1就是1）
+
+```c
+int a = 5;    // 0101
+int b = 3;    // 0011
+int c = a | b; // 0111 (7)
+
+// 运算规则：
+// 0 | 0 = 0
+// 0 | 1 = 1
+// 1 | 0 = 1
+// 1 | 1 = 1
+
+// 用途：设置特定位为1
+```
+
+## 3. **按位异或 `^`**（不同为1，相同为0）
+
+```c
+int a = 5;    // 0101
+int b = 3;    // 0011
+int c = a ^ b; // 0110 (6)
+
+// 运算规则：
+// 0 ^ 0 = 0
+// 0 ^ 1 = 1
+// 1 ^ 0 = 1
+// 1 ^ 1 = 0
+
+// 特性：
+// 1. a ^ a = 0
+// 2. a ^ 0 = a
+// 3. 交换律：a ^ b ^ c = a ^ c ^ b
+```
+
+## 4. **按位取反 `~`**（一元运算符，0变1，1变0）
+
+```c
+int a = 5;     // 0000 0101 (假设8位)
+int b = ~a;    // 1111 1010 (-6，因为是有符号数)
+
+// 注意：取反后，所有位翻转
+// 对无符号数：~5 = 250 (8位时)
+// 对有符号数：~5 = -6 (补码表示)
+
+unsigned char x = 5;    // 0000 0101
+unsigned char y = ~x;   // 1111 1010 (250)
+```
+
+## 5. **左移 `<<`**（向左移动，右边补0）
+
+```c
+int a = 5;      // 0101
+int b = a << 1; // 1010 (10)
+int c = a << 2; // 1 0100 (20) - 注意：可能会溢出
+
+// 左移n位相当于乘以2的n次方（如果没有溢出）
+// 5 << 1 = 10 (5*2)
+// 5 << 2 = 20 (5*4)
+// 5 << 3 = 40 (5*8)
+```
+
+## 6. **右移 `>>`**（向右移动）
+
+```c
+// 对有符号数：算术右移（补符号位）
+int a = -8;      // 1111 1000 (假设8位，补码)
+int b = a >> 1;  // 1111 1100 (-4) - 保持符号
+
+// 对无符号数：逻辑右移（补0）
+unsigned int c = 8;  // 0000 1000
+unsigned int d = c >> 1; // 0000 0100 (4)
+
+// 右移n位相当于除以2的n次方（向下取整）
+// 8 >> 1 = 4 (8/2)
+// 8 >> 2 = 2 (8/4)
+// 8 >> 3 = 1 (8/8)
+```
+
+---
+
+## 实用代码示例
+
+```c
+#include <stdio.h>
+#include <stdint.h>  // 为了使用uint8_t等标准类型
+
+// 打印8位二进制
+void printBinary(uint8_t num) {
+    for (int i = 7; i >= 0; i--) {
+        printf("%d", (num >> i) & 1);
+        if (i == 4) printf(" ");
+    }
+}
+
+int main() {
+    printf("========== 位运算符演示 ==========\n\n");
+    
+    uint8_t a = 0b00110101;  // 53
+    uint8_t b = 0b00011110;  // 30
+    
+    printf("a = "); printBinary(a); printf(" (十进制 %d)\n", a);
+    printf("b = "); printBinary(b); printf(" (十进制 %d)\n", b);
+    printf("\n");
+    
+    // 1. 按位与 &
+    printf("1. 按位与 (a & b):\n");
+    printf("   "); printBinary(a); printf("\n");
+    printf(" & "); printBinary(b); printf("\n");
+    printf("   ---------\n");
+    printf("   "); printBinary(a & b); printf(" (十进制 %d)\n\n", a & b);
+    
+    // 2. 按位或 |
+    printf("2. 按位或 (a | b):\n");
+    printf("   "); printBinary(a); printf("\n");
+    printf(" | "); printBinary(b); printf("\n");
+    printf("   ---------\n");
+    printf("   "); printBinary(a | b); printf(" (十进制 %d)\n\n", a | b);
+    
+    // 3. 按位异或 ^
+    printf("3. 按位异或 (a ^ b):\n");
+    printf("   "); printBinary(a); printf("\n");
+    printf(" ^ "); printBinary(b); printf("\n");
+    printf("   ---------\n");
+    printf("   "); printBinary(a ^ b); printf(" (十进制 %d)\n\n", a ^ b);
+    
+    // 4. 按位取反 ~
+    printf("4. 按位取反 (~a):\n");
+    printf("   ~"); printBinary(a); printf("\n");
+    printf("   ---------\n");
+    printf("    "); printBinary(~a); printf(" (十进制 %u)\n\n", (uint8_t)~a);
+    
+    // 5. 左移 <<
+    printf("5. 左移 (a << 2):\n");
+    printf("   "); printBinary(a); printf(" << 2\n");
+    printf("   ---------\n");
+    printf("   "); printBinary(a << 2); printf(" (十进制 %d)\n\n", a << 2);
+    
+    // 6. 右移 >>
+    printf("6. 右移 (a >> 2):\n");
+    printf("   "); printBinary(a); printf(" >> 2\n");
+    printf("   ---------\n");
+    printf("   "); printBinary(a >> 2); printf(" (十进制 %d)\n\n", a >> 2);
+    
+    return 0;
+}
+```
+
+---
+
+## 实际应用场景
+
+### 场景1：标志位操作（最常用！）
+
+```c
+// 定义标志位
+#define FLAG_A (1 << 0)  // 00000001
+#define FLAG_B (1 << 1)  // 00000010
+#define FLAG_C (1 << 2)  // 00000100
+#define FLAG_D (1 << 3)  // 00001000
+
+int main() {
+    unsigned char flags = 0;  // 初始所有标志为0
+    
+    // 设置标志位
+    flags |= FLAG_A;      // 设置A标志
+    flags |= (FLAG_B | FLAG_C);  // 同时设置B和C
+    
+    // 检查标志位
+    if (flags & FLAG_A) {
+        printf("标志A已设置\n");
+    }
+    
+    // 清除标志位
+    flags &= ~FLAG_B;     // 清除B标志
+    flags &= ~(FLAG_A | FLAG_C);  // 同时清除A和C
+    
+    // 切换标志位（有则清除，无则设置）
+    flags ^= FLAG_D;      // 第一次调用设置，第二次调用清除
+    
+    return 0;
+}
+```
+
+### 场景2：高效乘除2的幂
+
+```c
+// 使用移位代替乘除（编译器通常会自动优化）
+int multiplyBy16(int x) {
+    return x << 4;  // 比 x * 16 快（某些架构上）
+}
+
+int divideBy8(int x) {
+    return x >> 3;  // 比 x / 8 快
+}
+
+// 注意：右移对于负数相当于算术右移（保持符号）
+```
+
+### 场景3：颜色处理（RGBA）
+
+```c
+// 假设32位颜色：ARGB格式，每通道8位
+#define ALPHA_MASK 0xFF000000
+#define RED_MASK   0x00FF0000
+#define GREEN_MASK 0x0000FF00
+#define BLUE_MASK  0x000000FF
+
+unsigned int getAlpha(unsigned int color) {
+    return (color & ALPHA_MASK) >> 24;
+}
+
+unsigned int setGreen(unsigned int color, unsigned int green) {
+    // 先清零绿色通道，再设置新值
+    return (color & ~GREEN_MASK) | ((green << 8) & GREEN_MASK);
+}
+```
+
+### 场景4：交换两个变量（不使用临时变量）
+
+```c
+void swap(int *a, int *b) {
+    *a = *a ^ *b;
+    *b = *a ^ *b;  // 现在b = 原来的a
+    *a = *a ^ *b;  // 现在a = 原来的b
+}
+
+// 原理：利用异或的性质
+// 步骤1: a = a ^ b
+// 步骤2: b = (a ^ b) ^ b = a
+// 步骤3: a = (a ^ b) ^ a = b
+```
+
+### 场景5：检查/设置特定位
+
+```c
+// 检查第n位（从0开始）
+int checkBit(int num, int n) {
+    return (num >> n) & 1;
+}
+
+// 设置第n位为1
+int setBit(int num, int n) {
+    return num | (1 << n);
+}
+
+// 清除第n位（设为0）
+int clearBit(int num, int n) {
+    return num & ~(1 << n);
+}
+
+// 切换第n位（0变1，1变0）
+int toggleBit(int num, int n) {
+    return num ^ (1 << n);
+}
+```
+
+---
+
+## 位运算符的赋值形式
+
+所有位运算符都有对应的赋值运算符：
+
+```c
+int x = 10;
+
+x &= 5;   // x = x & 5
+x |= 3;   // x = x | 3
+x ^= 7;   // x = x ^ 7
+x <<= 2;  // x = x << 2
+x >>= 1;  // x = x >> 1
+```
+
+---
+
+## 常见陷阱
+
+```c
+// 陷阱1：优先级问题
+if (a & 1 == 0)    // 错误！== 优先级高于 &
+if ((a & 1) == 0)  // 正确
+
+// 陷阱2：位移超出范围
+int x = 1;
+x = x << 31;       // 可能溢出或产生未定义行为
+
+// 陷阱3：对有符号数右移
+int y = -1;
+y = y >> 1;        // 结果是-1还是其他？取决于实现
+
+// 陷阱4：位移负数位
+int z = 10 << -1;  // 未定义行为！
+
+// 最佳实践：对无符号数使用位移
+unsigned int safe = 10;
+safe = safe << 3;  // 安全
+```
+
+## 记忆技巧
+
+1. **&**：联想"与门" - 两个都要
+2. **|**：联想"或门" - 有一个就行
+3. **^**：联想"异或" - 排他性（要么这个要么那个）
+4. **~**：联想"取反" - 全部翻转
+5. **<<**：联想"左移" - 变大（乘2）
+6. **>>**：联想"右移" - 变小（除2）
+
+**建议练习**：用二进制纸笔计算几次，很快就会熟练！
