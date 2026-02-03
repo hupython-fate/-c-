@@ -48,8 +48,6 @@ void sort(int *arr,int qi,int n)
 //0<0为假，递归终止。
 
 
-
-
 int main(int argc, char *argv[])
 {
   int n,i,j,arr[101];
