@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/hu-cheng-jian/my_code/-c-/数据结构与算法",
-      "program": "/home/hu-cheng-jian/my_code/-c-/数据结构与算法/build/Debug/outDebug",
+      "cwd": "/home/hu-cheng-jian/my_code/-c-/LanQiaoOfCode",
+      "program": "/home/hu-cheng-jian/my_code/-c-/LanQiaoOfCode/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
