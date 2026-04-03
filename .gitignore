@@ -1,0 +1,59 @@
+# 操作系统生成
+.DS_Store
+Thumbs.db
+
+# IDE 配置（根据你用的IDE选择）
+.idea/          # IntelliJ IDEA
+.vscode/        # VS Code
+*.iml           # IntelliJ module
+.project        # Eclipse
+.classpath      # Eclipse
+
+# 日志文件
+*.log
+
+# 敏感信息
+.env
+*.local.*
+secrets.yml
+
+# 编译输出
+target/
+bin/
+*.class
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+
+
+__pycache__/
+*.py[cod]
+venv/
+.env/
+*.so
+*.egg-info/
+dist/
+build/
+
+
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+.env
+package-lock.json   # 或保留，团队协商
+
+
+*.o
+*.exe
+*.out
+*.obj
+Debug/
+Release/
+
