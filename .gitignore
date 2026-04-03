@@ -1,13 +1,52 @@
 # 操作系统生成
 .DS_Store
 Thumbs.db
+._*
 
-# IDE 配置（根据你用的IDE选择）
-.idea/          # IntelliJ IDEA
-.vscode/        # VS Code
-*.iml           # IntelliJ module
-.project        # Eclipse
-.classpath      # Eclipse
+# IDE / 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.iml
+
+# 编译输出
+bin/
+obj/
+Debug/
+Release/
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.so
+*.dll
+*.dylib
+*.ilk
+*.pdb
+*.exp
+*.lib
+
+# 预处理/汇编/依赖
+*.i
+*.s
+*.d
+*.map
+
+# 预编译头
+*.gch
+
+# 代码覆盖率
+*.gcno
+*.gcda
+*.gcov
+
+# 索引文件
+cscope.out
+tags
+TAGS
 
 # 日志文件
 *.log
@@ -16,44 +55,4 @@ Thumbs.db
 .env
 *.local.*
 secrets.yml
-
-# 编译输出
-target/
-bin/
-*.class
-
-# Maven
-pom.xml.tag
-pom.xml.releaseBackup
-
-# Gradle
-.gradle/
-build/
-gradle-app.setting
-
-
-__pycache__/
-*.py[cod]
-venv/
-.env/
-*.so
-*.egg-info/
-dist/
-build/
-
-
-node_modules/
-npm-debug.log
-yarn-error.log
-dist/
-.env
-package-lock.json   # 或保留，团队协商
-
-
-*.o
-*.exe
-*.out
-*.obj
-Debug/
-Release/
 
