@@ -1,6 +1,35 @@
-I'm a C language learner, and this repository contains all the code I've written since I started learning C. 
-I'll keep updating it regularly as long as I'm still learning C or writing C code. 
-You can use this repository in a few ways: first, by browsing through the different folders, or second, by checking the commit history—or really, any other method you prefer.
-I warmly welcome anyone to make use of this repository.
-Don’t hesitate or feel shy—if this repository brings even a little value to you, I’ll be truly happy.
-Otherwise, what’s the point of creating it? I’ve also grown thanks to the selfless sharing of those who came before me.
+# C 语言学习仓库
+
+个人 C 语言练习与项目合集，按**知识阶段**组织在仓库根目录的编号文件夹中，便于从易到难浏览。
+
+## 目录结构（学习顺序）
+
+| 目录 | 内容概要 |
+|:---|:---|
+| [01_入门与环境](01_入门与环境/) | 环境说明、Hello World、第一个程序 |
+| [02_变量类型与运算符](02_变量类型与运算符/) | 类型、常量、运算符、位运算入门等 |
+| [03_流程控制](03_流程控制/) | 分支、循环、穷举与小题目 |
+| [04_函数](04_函数/) | 函数、递归、作用域 |
+| [05_数组与字符串](05_数组与字符串/) | 一维/二维数组、字符串 |
+| [06_指针](06_指针/) | 指针基础、指针与数组、字符指针 |
+| [07_结构体](07_结构体/) | `struct`、小项目（如成绩管理） |
+| [08_动态内存与链表](08_动态内存与链表/) | `malloc`/`free`、链表、约瑟夫环等 |
+| [09_文件与输入输出](09_文件与输入输出/) | 文本/二进制文件、`fscanf` 等 |
+| [10_工程化与调试](10_工程化与调试/) | 习惯、笔记、调试相关 |
+| [11_数据结构与算法](11_数据结构与算法/) | 栈、队列、树、排序等 |
+| [12_综合项目](12_综合项目/) | Web 服务器、小游戏、三字棋等 |
+| [13_竞赛与扩展](13_竞赛与扩展/) | 蓝桥/练习代码、GTK、密码学、`time.h` 等 |
+| [14_笔记与参考文档](14_笔记与参考文档/) | AI 整理笔记、*C Primer Plus* 习题 |
+| [15_杂项与交流](15_杂项与交流/) | 与同学的练习、零散尝试 |
+
+各阶段内的文件名常带有来源前缀（如 `课堂学习_`、`林莉莉_`、`比特鹏哥_`、`作为up主_`），方便辨认出处。
+
+## 其他说明
+
+- 重组过程由 `scripts/apply_repo_restructure.py` 记录（若需再次迁移可参考，一般不必重复执行）。
+- 含数据文件的题目在 `09_文件与输入输出/` 的子目录中，编译运行前请在**对应子目录**下执行，以便相对路径正确。
+- 根目录仍有 `LICENSE`、`cleanup.sh`、`.gitignore` 等仓库级文件。
+
+## English
+
+This repo is a personal **C learning workspace**, reorganized into **numbered topic folders** at the repository root (`01_…` through `15_…`) for easier navigation from basics to projects. Start at [01_入门与环境](01_入门与环境/).
