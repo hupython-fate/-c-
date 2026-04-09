@@ -1,8 +1,50 @@
 # C 语言学习仓库
 
-个人 C 语言练习与项目合集，按**知识阶段**组织在仓库根目录的编号文件夹中，便于从易到难浏览。
+## 作者的话（多语言）
+
+以下为仓库说明：**英文段为你原先的原文，未改动**；其余语言为同一内容的译文。
+
+### English (original)
+
+I'm a C language learner, and this repository contains all the code I've written since I started learning C.
+I'll keep updating it regularly as long as I'm still learning C or writing C code.
+You can use this repository in a few ways: first, by browsing through the different folders, or second, by checking the commit history—or really, any other method you prefer.
+I warmly welcome anyone to make use of this repository.
+Don't hesitate or feel shy—if this repository brings even a little value to you, I'll be truly happy.
+Otherwise, what's the point of creating it? I've also grown thanks to the selfless sharing of those who came before me.
+
+### 简体中文
+
+我是一名 C 语言学习者，本仓库收录了我从开始学习 C 以来写过的代码。
+只要我还在学 C 或还在写 C，我就会持续更新这里。
+你可以用多种方式使用本仓库：例如浏览不同文件夹，或查看提交记录——当然，任何对你方便的方式都可以。
+我真诚欢迎任何人使用本仓库。
+不必犹豫或拘谨——只要它能给你带来一点点帮助，我就会非常高兴。
+否则，我建这个仓库又有什么意义呢？我也曾受益于前辈们无私的分享，并因此成长。
+
+### 日本語
+
+私は C 言語の学習者で、このリポジトリには C を学び始めてから書いてきたコードがすべて入っています。
+C の学習や C での実装を続けている限り、定期的に更新していきます。
+このリポジトリの使い方はいろいろあります。フォルダを眺めたり、コミット履歴を追ったり——あるいは、あなたの好きな方法で構いません。
+どなたでも自由に使っていただけるとうれしいです。
+遠慮なくどうぞ。このリポジトリが少しでも役に立てば、私は本当に嬉しいです。
+さもなければ、作った意味がありません。先に学んでくださった方々の惜しみない共有のおかげで、私も成長できました。
+
+### 한국어
+
+저는 C 언어를 배우는 사람이며, 이 저장소에는 C를 배우기 시작한 이래 제가 작성한 코드가 담겨 있습니다.
+C를 계속 배우거나 C로 코드를 쓰는 한, 꾸준히 업데이트할 것입니다.
+이 저장소는 여러 방식으로 활용하실 수 있습니다. 폴더를 둘러보시거나, 커밋 기록을 살펴보시거나——혹은 여러분에게 편한 다른 방법이어도 좋습니다.
+누구나 마음껏 사용해 주시길 진심으로 환영합니다.
+망설이지 마세요. 이 저장소가 조금이라도 도움이 된다면 저는 정말 기쁩니다.
+그렇지 않다면, 만들 이유가 없겠죠. 먼저 나눠 주신 분들의 이타적인 공유 덕분에 저 또한 성장할 수 있었습니다.
+
+---
 
 ## 目录结构（学习顺序）
+
+仓库根目录按**知识阶段**编号（`01`…`15`），便于从易到难浏览。
 
 | 目录 | 内容概要 |
 |:---|:---|
@@ -28,8 +70,4 @@
 
 - 重组过程由 `scripts/apply_repo_restructure.py` 记录（若需再次迁移可参考，一般不必重复执行）。
 - 含数据文件的题目在 `09_文件与输入输出/` 的子目录中，编译运行前请在**对应子目录**下执行，以便相对路径正确。
-- 根目录仍有 `LICENSE`、`cleanup.sh`、`.gitignore` 等仓库级文件。
-
-## English
-
-This repo is a personal **C learning workspace**, reorganized into **numbered topic folders** at the repository root (`01_…` through `15_…`) for easier navigation from basics to projects. Start at [01_入门与环境](01_入门与环境/).
+- 根目录另有 `LICENSE`、`cleanup.sh`、`.gitignore` 等仓库级文件。
