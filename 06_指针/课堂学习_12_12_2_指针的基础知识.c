@@ -20,7 +20,7 @@ int main(void)
 	
 	//基于以上，还可以这样做。
 	*p=123456;
-	printf("%d",*q);
+	printf("%d",*p);
 
 
 	return 0;
